@@ -1,0 +1,13 @@
+package rules
+
+import org.mycroftai.styxcd.orchestrator.service.rules.GreetingRequest;
+import org.mycroftai.styxcd.orchestrator.service.rules.GreetingResponse;
+
+rule "Say goodbye to john"
+when
+    $request : GreetingRequest(name != null && name.equalsIgnoreCase("john"))
+    $response : GreetingResponse()
+then
+    $response.setMessage("goodbye!");
+    update($response);
+end

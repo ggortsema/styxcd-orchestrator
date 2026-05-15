@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: orchestrator
+
+  datasource:
+    url: ${STYXCD_DB_URL:jdbc:postgresql://localhost:5432/styxcd}
+    username: ${STYXCD_DB_USERNAME:rincexwind}
+    password: ${STYXCD_DB_PASSWORD:}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+server:
+  address: 127.0.0.1
+  port: 8080

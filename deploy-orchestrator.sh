@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+KEY="/Users/grant/dev/aws/keypairs/macpro14.pem"
 EC2_HOST="ec2-user@orchestrator.styxcd.com"
 JAR="target/orchestrator-0.0.1-SNAPSHOT.jar"
 
@@ -8,10 +9,10 @@ echo "Building orchestrator..."
 mvn clean package -DskipTests
 
 echo "Uploading jar..."
-scp "$JAR" "$EC2_HOST:/tmp/orchestrator.jar"
+scp -i "$KEY" "$JAR" "$EC2_HOST:/tmp/orchestrator.jar"
 
 echo "Deploying and restarting service..."
-ssh "$EC2_HOST" '
+ssh -i "$KEY" "$EC2_HOST" '
   set -e
 
   sudo mv /tmp/orchestrator.jar /opt/orchestrator/releases/orchestrator-0.0.1-SNAPSHOT.jar

@@ -1,0 +1,30 @@
+package com.styxcd.rules.deployment
+
+expander deployment-policy.dsl
+
+rule "Prod deploy requires approval"
+when
+    A deployment request is for environment "prod"
+    The application risk level is "high"
+then
+    Require approval from "Platform Architecture"
+    Mark deployment as "blocked_pending_approval"
+end
+
+
+rule "Canary required for customer-facing prod apps"
+when
+    A deployment request is for environment "prod"
+    The application is customer facing
+then
+    Require deployment strategy "canary"
+    Add policy message "Customer-facing production apps must use canary deployment."
+end
+
+
+rule "Dev deployments can auto approve"
+when
+    A deployment request is for environment "dev"
+then
+    Mark deployment as "approved"
+end

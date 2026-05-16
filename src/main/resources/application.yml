@@ -15,3 +15,10 @@ spring:
 server:
   address: 127.0.0.1
   port: 8080
+
+styxcd:
+  jenkins:
+    base-url: http://jenkins.styxcd.com:8080
+    job-name: external-input-orchestrator-test-json
+    username: ${JENKINS_USERNAME}
+    api-token: ${JENKINS_API_TOKEN}

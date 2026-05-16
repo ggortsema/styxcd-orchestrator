@@ -4,7 +4,7 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.mycroftai.styxcd.orchestrator.service.rules.GreetingRequest;
 import org.mycroftai.styxcd.orchestrator.service.rules.GreetingResponse;
-import org.mycroftai.styxcd.orchestrator.groovy.GreeterHelper;
+import org.mycroftai.styxcd.orchestrator.service.rules.GreeterHelper;
 import org.springframework.stereotype.Service;
 
 @Service

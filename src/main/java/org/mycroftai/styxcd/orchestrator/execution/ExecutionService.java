@@ -45,4 +45,13 @@ public class ExecutionService {
 
         return executionRepository.save(execution);
     }
+
+    public void applyCallback(UUID id, ExecutionCallbackRequest request) {
+        Execution execution = executionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Execution not found: " + id));
+
+        execution.setStatus(request.status());
+
+        executionRepository.save(execution);
+    }
 }

@@ -1,5 +1,6 @@
 package org.mycroftai.styxcd.orchestrator.execution;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -30,5 +31,11 @@ public class ExecutionController {
     @GetMapping("/{id}/plan")
     public Map<String, Object> getPlan(@PathVariable UUID id) {
         return executionRepository.findById(id).orElseThrow().getExecutionPlan();
+    }
+
+    @PostMapping("/{id}/callback")
+    public ResponseEntity<Void> callback(@PathVariable UUID id, @RequestBody ExecutionCallbackRequest request) {
+        executionService.applyCallback(id, request);
+        return ResponseEntity.ok().build();
     }
 }

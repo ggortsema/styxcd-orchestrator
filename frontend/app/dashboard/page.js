@@ -1,13 +1,213 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+const API_BASE_URL = 'http://orchestrator.styxcd.com';
+
+const defaultYml = `workflow: 'cloud_workflow'
+release:
+  name: styxcd-jenkins-build
+  version: 1.0.0
+
+  applications:
+    spring:
+      - name: styxcd-jenkins
+        repo: https://github.com/ggortsema/styxcd-jenkins.git
+        branch: main
+        build_tool: gradle`;
+
 export default function DashboardPage() {
-  return (
-    <div style={{ display: 'grid', gap: 16 }}>
-      <h1 style={{ margin: 0 }}>Dashboard</h1>
-      <p>This page is part of the static Next.js export bundled into the Spring Boot app.</p>
-      <ul>
-        <li><a href="/hello?name=world" style={{ color: '#93c5fd' }}>/hello?name=world</a></li>
-        <li><a href="/hello?name=john" style={{ color: '#93c5fd' }}>/hello?name=john</a></li>
-      </ul>
-      <a href="/" style={{ color: '#93c5fd' }}>Back home</a>
-    </div>
-  );
+    const [yml, setYml] = useState(defaultYml);
+    const [executionId, setExecutionId] = useState('');
+    const [status, setStatus] = useState('');
+    const [isRunning, setIsRunning] = useState(false);
+    const [consoleLines, setConsoleLines] = useState([]);
+
+    const log = (message) => {
+        setConsoleLines((lines) => [
+            ...lines,
+            `[${new Date().toLocaleTimeString()}] ${message}`
+        ]);
+    };
+
+    const submitExecution = async () => {
+        setIsRunning(true);
+        setExecutionId('');
+        setStatus('');
+        setConsoleLines([]);
+
+        try {
+            log('Submitting YML to orchestrator...');
+
+            const response = await fetch(`${API_BASE_URL}/executions`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: yml
+            });
+
+            if (!response.ok) {
+                throw new Error(`Create execution failed: HTTP ${response.status}`);
+            }
+
+            const execution = await response.json();
+
+            setExecutionId(execution.id);
+            setStatus(execution.status);
+            log(`Execution created: ${execution.id}`);
+            log(`Current status: ${execution.status}`);
+        } catch (error) {
+            log(`ERROR: ${error.message}`);
+            setIsRunning(false);
+        }
+    };
+
+    useEffect(() => {
+        if (!executionId || !isRunning) {
+            return;
+        }
+
+        const interval = setInterval(async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/executions/${executionId}`, {
+                    cache: 'no-store'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Status poll failed: HTTP ${response.status}`);
+                }
+
+                const execution = await response.json();
+
+                setStatus((previousStatus) => {
+                    if (previousStatus !== execution.status) {
+                        log(`Status changed: ${previousStatus || 'UNKNOWN'} → ${execution.status}`);
+                    }
+
+                    return execution.status;
+                });
+
+                if (execution.status === 'SUCCESS' || execution.status === 'FAILED') {
+                    setIsRunning(false);
+                    log(`Execution finished with status: ${execution.status}`);
+                }
+            } catch (error) {
+                log(`WARNING: ${error.message}`);
+            }
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [executionId, isRunning]);
+
+    return (
+        <div style={{ display: 'grid', gap: 20 }}>
+            <div>
+                <h1 style={{ margin: 0 }}>StyxCD Control Plane</h1>
+                <p style={{ color: '#94a3b8' }}>
+                    Submit YML, trigger Jenkins through the orchestrator, and poll execution status.
+                </p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                <section style={cardStyle}>
+                    <h2 style={{ marginTop: 0 }}>Run YML</h2>
+
+                    <textarea
+                        value={yml}
+                        onChange={(event) => setYml(event.target.value)}
+                        style={textareaStyle}
+                    />
+
+                    <button
+                        onClick={submitExecution}
+                        disabled={isRunning}
+                        style={buttonStyle}
+                    >
+                        {isRunning ? 'Running...' : 'Submit YML'}
+                    </button>
+                </section>
+
+                <section style={cardStyle}>
+                    <h2 style={{ marginTop: 0 }}>Execution Status</h2>
+
+                    <div style={statusGridStyle}>
+                        <div>
+                            <div style={labelStyle}>Execution ID</div>
+                            <div style={valueStyle}>{executionId || 'None yet'}</div>
+                        </div>
+
+                        <div>
+                            <div style={labelStyle}>Status</div>
+                            <div style={valueStyle}>{status || 'Idle'}</div>
+                        </div>
+                    </div>
+
+                    <h3>Console</h3>
+                    <pre style={consoleStyle}>
+            {consoleLines.length ? consoleLines.join('\n') : 'Waiting for execution...'}
+          </pre>
+                </section>
+            </div>
+
+            <a href="/" style={{ color: '#93c5fd' }}>Back home</a>
+        </div>
+    );
 }
+
+const cardStyle = {
+    padding: 16,
+    border: '1px solid #334155',
+    borderRadius: 12,
+    background: '#111827'
+};
+
+const textareaStyle = {
+    width: '100%',
+    minHeight: 420,
+    boxSizing: 'border-box',
+    padding: 12,
+    borderRadius: 8,
+    border: '1px solid #334155',
+    background: '#020617',
+    color: '#e2e8f0',
+    fontFamily: 'Menlo, Monaco, Consolas, monospace',
+    fontSize: 13
+};
+
+const buttonStyle = {
+    marginTop: 12,
+    padding: '10px 14px',
+    borderRadius: 8,
+    border: '1px solid #2563eb',
+    background: '#1d4ed8',
+    color: 'white',
+    cursor: 'pointer'
+};
+
+const statusGridStyle = {
+    display: 'grid',
+    gap: 12,
+    marginBottom: 16
+};
+
+const labelStyle = {
+    fontSize: 12,
+    color: '#94a3b8',
+    textTransform: 'uppercase'
+};
+
+const valueStyle = {
+    marginTop: 4,
+    wordBreak: 'break-all'
+};
+
+const consoleStyle = {
+    minHeight: 260,
+    padding: 12,
+    borderRadius: 8,
+    background: '#020617',
+    color: '#bbf7d0',
+    overflow: 'auto',
+    whiteSpace: 'pre-wrap'
+};

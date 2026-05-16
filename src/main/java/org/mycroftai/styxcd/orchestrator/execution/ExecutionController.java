@@ -12,10 +12,7 @@ public class ExecutionController {
     private final ExecutionService executionService;
     private final ExecutionRepository executionRepository;
 
-    public ExecutionController(
-            ExecutionService executionService,
-            ExecutionRepository executionRepository
-    ) {
+    public ExecutionController(ExecutionService executionService, ExecutionRepository executionRepository) {
         this.executionService = executionService;
         this.executionRepository = executionRepository;
     }
@@ -27,14 +24,11 @@ public class ExecutionController {
 
     @GetMapping("/{id}")
     public Execution get(@PathVariable UUID id) {
-        return executionRepository.findById(id)
-                .orElseThrow();
+        return executionRepository.findById(id).orElseThrow();
     }
 
     @GetMapping("/{id}/plan")
     public Map<String, Object> getPlan(@PathVariable UUID id) {
-        return executionRepository.findById(id)
-                .orElseThrow()
-                .getExecutionPlan();
+        return executionRepository.findById(id).orElseThrow().getExecutionPlan();
     }
 }

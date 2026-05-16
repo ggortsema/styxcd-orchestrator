@@ -3,7 +3,7 @@ package org.mycroftai.styxcd.orchestrator.execution;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.mycroftai.styxcd.orchestrator.plan.ExecutionPlanService;
+import org.mycroftai.styxcd.orchestrator.execution.plan.ExecutionPlanService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

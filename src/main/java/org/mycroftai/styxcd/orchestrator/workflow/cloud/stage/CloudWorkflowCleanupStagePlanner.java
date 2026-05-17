@@ -18,6 +18,7 @@ public class CloudWorkflowCleanupStagePlanner {
         params.put("label", "");
         params.put("VALIDATE_MAP", paramMap.get("VALIDATE_MAP"));
         params.put("YML", yml);
+        params.put("emitAggregateStageMetrics", false);
 
         return params;
     }

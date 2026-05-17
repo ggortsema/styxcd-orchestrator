@@ -11,7 +11,7 @@ export default function HomePage() {
                 <p>
                     Use the Executions section to submit YML, trigger the orchestrator, and watch current lifecycle status.
                 </p>
-                <a href="/executions/" style={{ color: '#93c5fd' }}>Go to Executions</a>
+                <a href="/Users/grant/dev/ai-ecosystem/styxcd/styxcd-orchestrator/frontend/app/operations/" style={{ color: '#93c5fd' }}>Go to Executions</a>
             </div>
         </div>
     );

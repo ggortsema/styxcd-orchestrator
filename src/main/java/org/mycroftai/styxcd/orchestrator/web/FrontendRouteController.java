@@ -1,4 +1,4 @@
-package org.mycroftai.styxcd.orchestrator.frontend;
+package org.mycroftai.styxcd.orchestrator.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +16,8 @@ public class FrontendRouteController {
         return "forward:/docs/index.html";
     }
 
-    @GetMapping({"/executions", "/executions/"})
-    public String executions() {
-        return "forward:/executions/index.html";
+    @GetMapping({"/operations", "/operations/"})
+    public String operations() {
+        return "forward:/operations/index.html";
     }
 }

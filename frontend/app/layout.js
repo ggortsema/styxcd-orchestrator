@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
 
           <nav style={{ display: 'grid', gap: 8 }}>
             <a href="/" style={navLinkStyle}>Dashboard</a>
-            <a href="/executions/" style={navLinkStyle}>Executions</a>
+            <a href="/operations/" style={navLinkStyle}>Operations</a>
             <a href="/docs/" style={navLinkStyle}>Docs</a>
           </nav>
         </aside>

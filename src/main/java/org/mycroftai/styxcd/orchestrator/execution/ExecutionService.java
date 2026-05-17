@@ -124,6 +124,10 @@ public class ExecutionService {
             String status,
             String message
     ) {
+
+        execution.setCurrentLifecycleEvent(eventType);
+        executionRepository.save(execution);
+
         ExecutionEvent event = executionEventFactory.create(
                 eventType,
                 execution,

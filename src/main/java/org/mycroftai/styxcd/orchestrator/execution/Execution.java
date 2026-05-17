@@ -13,11 +13,17 @@ import java.util.UUID;
 public class Execution {
 
     @Id
+    @Column(name = "id")
     private UUID id;
 
+    @Column(name = "workflow")
     private String workflow;
 
+    @Column(name = "status")
     private String status;
+
+    @Column(name = "current_lifecycle_event")
+    private String currentLifecycleEvent;
 
     @Column(name = "raw_yml", columnDefinition = "text")
     private String rawYml;
@@ -26,6 +32,7 @@ public class Execution {
     @Column(name = "execution_plan", columnDefinition = "jsonb")
     private Map<String, Object> executionPlan;
 
+    @Column(name = "created_at")
     private Instant createdAt;
 
     protected Execution() {
@@ -51,8 +58,17 @@ public class Execution {
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCurrentLifecycleEvent() {
+        return currentLifecycleEvent;
+    }
+
+    public void setCurrentLifecycleEvent(String currentLifecycleEvent) {
+        this.currentLifecycleEvent = currentLifecycleEvent;
     }
 
     public String getRawYml() {

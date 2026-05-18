@@ -17,10 +17,13 @@ public class ExecutionPlanService {
     }
 
     public Map<String, Object> createPlan(Map<String, Object> yml) {
+
+        String workflowName = (String) yml.get("workflow");
+
         WorkflowPlanner planner = workflowPlanners.stream()
-                .filter(workflowPlanner -> workflowPlanner.workflowName().equals("CloudWorkflow"))
+                .filter(workflowPlanner -> workflowPlanner.workflowName().equals(workflowName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No workflow planner found"));
+                .orElseThrow(() -> new IllegalArgumentException("No workflow planner found: " + workflowName));
 
         return planner.createJsonStageList(yml);
     }

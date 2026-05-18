@@ -1,15 +1,8 @@
 workflow: cloud_workflow
-
 release:
   name: johnny-platform-release
   version: 1.0.0
-
-  desired_state:
-    environment: present
-    applications: deployed
-
   applications:
-
     spring:
       - name: styxcd-jenkins
         repo: https://github.com/ggortsema/styxcd-jenkins.git

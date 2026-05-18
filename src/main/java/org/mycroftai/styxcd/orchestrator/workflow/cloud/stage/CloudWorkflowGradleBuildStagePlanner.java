@@ -25,14 +25,10 @@ public class CloudWorkflowGradleBuildStagePlanner implements WorkflowStagePlanne
             Map<String, Object> yml,
             Map<String, Object> paramMap
     ) {
-
         Map<String, Map<String, Object>> stages = new LinkedHashMap<>();
 
-        Map<String, Object> release =
-                (Map<String, Object>) yml.get("release");
-
-        Map<String, Object> applications =
-                (Map<String, Object>) release.get("applications");
+        Map<String, Object> release = (Map<String, Object>) yml.get("release");
+        Map<String, Object> applications = (Map<String, Object>) release.get("applications");
 
         if (applications == null) {
             return stages;
@@ -46,32 +42,26 @@ public class CloudWorkflowGradleBuildStagePlanner implements WorkflowStagePlanne
         }
 
         for (Map<String, Object> app : springApps) {
-
-            Map<String, Object> build =
-                    (Map<String, Object>) app.get("build");
+            Map<String, Object> build = (Map<String, Object>) app.get("build");
 
             if (build == null) {
                 continue;
             }
 
-            String buildType =
-                    (String) build.get("type");
+            String buildType = (String) build.get("type");
 
             if (!"gradle".equals(buildType)) {
                 continue;
             }
 
-            String appHostName =
-                    (String) app.get("name");
+            String appHostName = (String) app.get("name");
 
-            Map<String, Object> stageParamMap =
-                    new LinkedHashMap<>(paramMap);
-
+            Map<String, Object> stageParamMap = new LinkedHashMap<>(paramMap);
             stageParamMap.put("APPHOST_NAME", appHostName);
 
             stages.put(
                     stageType() + ":" + appHostName,
-                    getParams(yml, stageParamMap)
+                    getParams(yml, stageParamMap, app)
             );
         }
 
@@ -80,32 +70,27 @@ public class CloudWorkflowGradleBuildStagePlanner implements WorkflowStagePlanne
 
     private Map<String, Object> getParams(
             Map<String, Object> yml,
-            Map<String, Object> paramMap
+            Map<String, Object> paramMap,
+            Map<String, Object> app
     ) {
-
         Map<String, Object> params = new LinkedHashMap<>();
 
-        String appHostName =
-                (String) paramMap.get("APPHOST_NAME");
+        String appHostName = (String) paramMap.get("APPHOST_NAME");
 
         params.put("appHostName", appHostName);
+        params.put("appName", appHostName);
 
-        /*
-         * Human readable execution-plan display name
-         */
-        params.put(
-                "stagename",
-                "Build Gradle App - " + appHostName
-        );
-
-        /*
-         * Canonical stage type identifier
-         */
+        params.put("stagename", "Build Gradle App - " + appHostName);
         params.put("stageType", stageType());
-
         params.put("label", "styxcd-agent");
+
         params.put("VALIDATE_MAP", paramMap.get("VALIDATE_MAP"));
-        params.put("YML", yml);
+
+        params.put("repo", app.get("repo"));
+        params.put("branch", app.getOrDefault("branch", "main"));
+        params.put("buildCommand", "./gradlew clean test");
+        params.put("preWorkspaceStashName", appHostName + "-pre-workspace");
+        params.put("workspaceStashName", appHostName + "-workspace");
 
         return params;
     }

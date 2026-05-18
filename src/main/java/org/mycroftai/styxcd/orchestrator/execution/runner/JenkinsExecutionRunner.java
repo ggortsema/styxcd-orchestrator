@@ -3,6 +3,7 @@ package org.mycroftai.styxcd.orchestrator.execution.runner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mycroftai.styxcd.orchestrator.execution.Execution;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@ConditionalOnProperty(
+        name = "styxcd.jenkins.enabled",
+        havingValue = "true",
+        matchIfMissing = true
+)
 public class JenkinsExecutionRunner implements ExecutionRunner {
 
     @Value("${styxcd.jenkins.base-url}")

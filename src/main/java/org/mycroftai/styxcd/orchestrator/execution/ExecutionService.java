@@ -4,28 +4,37 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import org.mycroftai.styxcd.orchestrator.execution.plan.ExecutionPlanService;
 import org.mycroftai.styxcd.orchestrator.execution.runner.ExecutionRunner;
 import org.mycroftai.styxcd.orchestrator.observability.ExecutionEvent;
 import org.mycroftai.styxcd.orchestrator.observability.ExecutionEventFactory;
 import org.mycroftai.styxcd.orchestrator.observability.LokiEventPublisher;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class ExecutionService {
 
     private final ExecutionRepository executionRepository;
     private final ExecutionPlanService executionPlanService;
-    private final ExecutionRunner executionRunner;
+    private final Optional<ExecutionRunner> executionRunner;
     private final ExecutionEventFactory executionEventFactory;
     private final LokiEventPublisher lokiEventPublisher;
     private final ObjectMapper ymlMapper = new ObjectMapper(new YAMLFactory());
+    @Value("${styxcd.jenkins.enabled:true}")
+    private boolean jenkinsEnabled;
+
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(ExecutionService.class);
 
     public ExecutionService(
             ExecutionRepository executionRepository,
             ExecutionPlanService executionPlanService,
-            ExecutionRunner executionRunner,
+            Optional<ExecutionRunner> executionRunner,
             ExecutionEventFactory executionEventFactory,
             LokiEventPublisher lokiEventPublisher
     ) {
@@ -70,7 +79,26 @@ public class ExecutionService {
                 "Execution plan created"
         );
 
-        executionRunner.start(execution);
+        if (jenkinsEnabled && executionRunner.isPresent()) {
+
+            executionRunner.get().start(execution);
+
+        } else {
+
+            LOGGER.info(
+                    "Skipping execution runner because styxcd.jenkins.enabled=false"
+            );
+
+            LOGGER.info(
+                    "Execution that would have been sent to Jenkins: {}",
+                    execution
+            );
+
+            LOGGER.info(
+                    "Execution plan that would have been sent to Jenkins: {}",
+                    execution.getExecutionPlan()
+            );
+        }
 
         execution.setStatus("TRIGGERED");
         execution = executionRepository.save(execution);

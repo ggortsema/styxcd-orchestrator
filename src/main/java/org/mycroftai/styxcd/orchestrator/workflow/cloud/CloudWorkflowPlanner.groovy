@@ -5,7 +5,7 @@ import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.WorkflowStagePlann
 import org.springframework.stereotype.Component
 
 @Component
-class CloudWorkflowPlanner {
+class CloudWorkflowPlanner implements WorkflowPlanner {
 
     private static final String WORKFLOW_NAME = "cloud_workflow"
 
@@ -15,6 +15,16 @@ class CloudWorkflowPlanner {
             WorkflowStagePlannerRegistry workflowStagePlannerRegistry
     ) {
         this.workflowStagePlannerRegistry = workflowStagePlannerRegistry
+    }
+
+    @Override
+    String workflowName() {
+        return WORKFLOW_NAME
+    }
+
+    @Override
+    Map<String, Object> createJsonStageList(Map<String, Object> yml) {
+        return buildExecutionPlan(yml)
     }
 
     Map<String, Object> buildExecutionPlan(Map<String, Object> yml) {

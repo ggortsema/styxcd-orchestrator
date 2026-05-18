@@ -82,4 +82,17 @@ public class Execution {
     public Instant getCreatedAt() {
         return createdAt;
     }
+
+    @Override
+    public String toString() {
+
+        return "Execution{" +
+                "id=" + id +
+                ", workflow='" + workflow + '\'' +
+                ", status='" + status + '\'' +
+                ", currentLifecycleEvent='" + currentLifecycleEvent + '\'' +
+                ", createdAt=" + createdAt +
+                ", executionPlan=" + executionPlan +
+                '}';
+    }
 }

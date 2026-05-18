@@ -19,7 +19,7 @@ public class CloudWorkflowGradleBuildStagePlanner {
 
         params.put("appHostName", appHostName);
         params.put("stagename", "Build Gradle App - " + appHostName);
-        params.put("label", "");
+        params.put("label", "styxcd-agent");
         params.put("VALIDATE_MAP", paramMap.get("VALIDATE_MAP"));
         params.put("YML", yml);
 

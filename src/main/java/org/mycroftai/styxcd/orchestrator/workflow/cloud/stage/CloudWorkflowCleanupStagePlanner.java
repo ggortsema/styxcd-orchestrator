@@ -15,7 +15,7 @@ public class CloudWorkflowCleanupStagePlanner {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("stagename", "cleanup");
-        params.put("label", "");
+        params.put("label", "styxcd-agent");
         params.put("VALIDATE_MAP", paramMap.get("VALIDATE_MAP"));
         params.put("YML", yml);
         params.put("emitAggregateStageMetrics", false);

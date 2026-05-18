@@ -29,7 +29,7 @@ public class Execution {
     private String rawYml;
 
     @Type(JsonType.class)
-    @Column(name = "execution_plan", columnDefinition = "jsonb")
+    @Column(name = "execution_plan", columnDefinition = "json")
     private Map<String, Object> executionPlan;
 
     @Column(name = "created_at")

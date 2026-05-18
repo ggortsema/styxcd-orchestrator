@@ -37,7 +37,6 @@ public class CloudWorkflowRunTerraformApplyStagePlanner implements WorkflowStage
             Map<String, Object> yml,
             Map<String, Object> paramMap
     ) {
-
         Map<String, Map<String, Object>> stages = new LinkedHashMap<>();
 
         Map<String, Object> release =
@@ -96,7 +95,7 @@ public class CloudWorkflowRunTerraformApplyStagePlanner implements WorkflowStage
                 stageParamMap.put("ENVIRONMENT", environment);
 
                 stages.put(
-                        stageType() + ":" + environmentName,
+                        workflowName() + ":" + stageType() + ":" + environmentName,
                         buildParams(yml, stageParamMap)
                 );
             }
@@ -110,7 +109,6 @@ public class CloudWorkflowRunTerraformApplyStagePlanner implements WorkflowStage
             Map<String, Object> yml,
             Map<String, Object> paramMap
     ) {
-
         Map<String, Object> params = new LinkedHashMap<>();
 
         Map<String, Object> release =
@@ -213,7 +211,6 @@ public class CloudWorkflowRunTerraformApplyStagePlanner implements WorkflowStage
     private List<String> extractApplicationNames(
             Map<String, Object> release
     ) {
-
         List<String> appNames = new ArrayList<>();
 
         Map<String, Object> applications =
@@ -237,7 +234,6 @@ public class CloudWorkflowRunTerraformApplyStagePlanner implements WorkflowStage
     }
 
     private String sha256(String value) {
-
         try {
             MessageDigest digest =
                     MessageDigest.getInstance("SHA-256");

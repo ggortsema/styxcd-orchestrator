@@ -23,11 +23,10 @@ public class CloudWorkflowCleanupStagePlanner implements WorkflowStagePlanner {
             Map<String, Object> yml,
             Map<String, Object> paramMap
     ) {
-
         Map<String, Map<String, Object>> stages = new LinkedHashMap<>();
 
         stages.put(
-                stageType(),
+                workflowName() + ":" + stageType(),
                 getParams(yml, paramMap)
         );
 
@@ -38,7 +37,6 @@ public class CloudWorkflowCleanupStagePlanner implements WorkflowStagePlanner {
             Map<String, Object> yml,
             Map<String, Object> paramMap
     ) {
-
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("stagename", stageType());

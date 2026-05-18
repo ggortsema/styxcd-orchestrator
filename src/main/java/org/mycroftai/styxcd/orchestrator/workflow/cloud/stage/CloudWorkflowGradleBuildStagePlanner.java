@@ -28,6 +28,11 @@ public class CloudWorkflowGradleBuildStagePlanner implements WorkflowStagePlanne
         Map<String, Map<String, Object>> stages = new LinkedHashMap<>();
 
         Map<String, Object> release = (Map<String, Object>) yml.get("release");
+
+        if (release == null) {
+            return stages;
+        }
+
         Map<String, Object> applications = (Map<String, Object>) release.get("applications");
 
         if (applications == null) {
@@ -60,8 +65,8 @@ public class CloudWorkflowGradleBuildStagePlanner implements WorkflowStagePlanne
             stageParamMap.put("APPHOST_NAME", appHostName);
 
             stages.put(
-                    stageType() + ":" + appHostName,
-                    getParams(yml, stageParamMap, app)
+                    workflowName() + ":" + stageType() + ":" + appHostName,
+                    getParams(stageParamMap, app)
             );
         }
 
@@ -69,7 +74,6 @@ public class CloudWorkflowGradleBuildStagePlanner implements WorkflowStagePlanne
     }
 
     private Map<String, Object> getParams(
-            Map<String, Object> yml,
             Map<String, Object> paramMap,
             Map<String, Object> app
     ) {

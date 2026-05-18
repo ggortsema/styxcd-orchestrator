@@ -1,56 +1,110 @@
-package org.mycroftai.styxcd.orchestrator.workflow.cloud
+package org.mycroftai.styxcd.orchestrator.workflow
 
-import org.mycroftai.styxcd.orchestrator.workflow.WorkflowPlanner
-import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.CloudWorkflowCleanupStagePlanner
-import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.CloudWorkflowGradleBuildStagePlanner
-import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.CloudWorkflowInitializeStagePlanner
+import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.WorkflowStagePlanner
+import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.WorkflowStagePlannerRegistry
 import org.springframework.stereotype.Component
 
 @Component
-class CloudWorkflowPlanner implements WorkflowPlanner {
+class CloudWorkflowPlanner {
 
-    private final CloudWorkflowInitializeStagePlanner initializeStagePlanner
-    private final CloudWorkflowGradleBuildStagePlanner gradleBuildStagePlanner
-    private final CloudWorkflowCleanupStagePlanner cleanupStagePlanner
+    private static final String WORKFLOW_NAME = "cloud_workflow"
 
-    CloudWorkflowPlanner(CloudWorkflowInitializeStagePlanner initializeStagePlanner, CloudWorkflowGradleBuildStagePlanner gradleBuildStagePlanner, CloudWorkflowCleanupStagePlanner cleanupStagePlanner) {
-        this.initializeStagePlanner = initializeStagePlanner
-        this.gradleBuildStagePlanner = gradleBuildStagePlanner
-        this.cleanupStagePlanner = cleanupStagePlanner
+    private final WorkflowStagePlannerRegistry workflowStagePlannerRegistry
+
+    CloudWorkflowPlanner(
+            WorkflowStagePlannerRegistry workflowStagePlannerRegistry
+    ) {
+        this.workflowStagePlannerRegistry = workflowStagePlannerRegistry
     }
 
-    @Override
-    String workflowName() {
-        return 'CloudWorkflow'
-    }
+    Map<String, Object> buildExecutionPlan(Map<String, Object> yml) {
 
-    @Override
-    Map<String, Object> createJsonStageList(Map<String, Object> yml) {
-        Map<String, Object> paramMap = [:]
-        Map<String, Object> jsonOutput = new LinkedHashMap<>()
+        Map<String, Object> executionPlan = new LinkedHashMap<>()
+        Map<String, Object> paramMap = buildBaseParamMap()
 
-        paramMap['VALIDATE_MAP'] = preprocessYml(yml)
+        addStage(executionPlan, yml, paramMap, "initialize")
 
-        jsonOutput['CloudWorkflowInitialize'] = initializeStagePlanner.getParams(yml, paramMap)
+        Map<String, Object> release = yml.release as Map<String, Object>
+        Map<String, Object> applications = release?.applications as Map<String, Object>
 
-        yml.release.applications.spring.each { app ->
-            paramMap = [:]
-            paramMap['APPHOST_NAME'] = app?.name
-            paramMap['VALIDATE_MAP'] = preprocessYml(yml)
+        List<Map<String, Object>> springApps =
+                applications?.spring as List<Map<String, Object>>
 
-            if (app.build_tool == 'gradle') {
-                jsonOutput["GradleBuild@${paramMap['APPHOST_NAME']}"] = gradleBuildStagePlanner.getParams(yml, paramMap)
-            }
+        boolean gradleBuildFound =
+                springApps?.any { Map<String, Object> app ->
+                    Map<String, Object> build = app.build as Map<String, Object>
+                    build?.type == "gradle"
+                }
+
+        if (gradleBuildFound) {
+            addStage(executionPlan, yml, paramMap, "gradle_build")
         }
 
-        jsonOutput['CloudWorkflowCleanup@final'] = cleanupStagePlanner.getParams(yml, paramMap)
+        Map<String, Object> environments =
+                release?.environments as Map<String, Object>
 
-        return jsonOutput
+        boolean terraformEnvironmentFound =
+                environments?.values()?.any { Object environmentGroup ->
+
+                    List<Map<String, Object>> environmentList =
+                            environmentGroup as List<Map<String, Object>>
+
+                    environmentList?.any { Map<String, Object> environment ->
+
+                        Map<String, Object> platform =
+                                environment.platform as Map<String, Object>
+
+                        Map<String, Object> infrastructure =
+                                platform?.infrastructure as Map<String, Object>
+
+                        infrastructure?.terraform != null
+                    }
+                }
+
+        if (terraformEnvironmentFound) {
+            addStage(executionPlan, yml, paramMap, "terraform_apply")
+        }
+
+        addStage(executionPlan, yml, paramMap, "cleanup")
+
+        return executionPlan
     }
 
-    private Map<String, Object> preprocessYml(Map<String, Object> yml) {
-        Map<String, Object> validateMap = [:]
+    private void addStage(
+            Map<String, Object> executionPlan,
+            Map<String, Object> yml,
+            Map<String, Object> paramMap,
+            String stageType
+    ) {
 
-        return validateMap
+        WorkflowStagePlanner planner =
+                workflowStagePlannerRegistry
+                        .find(WORKFLOW_NAME, stageType)
+                        .orElseThrow {
+                            new IllegalStateException(
+                                    "No stage planner registered for workflowName=${WORKFLOW_NAME}, stageType=${stageType}"
+                            )
+                        }
+
+        Map<String, Map<String, Object>> stages =
+                planner.getStages(yml, paramMap)
+
+        if (!stages) {
+            return
+        }
+
+        stages.each { String executionPlanKey, Map<String, Object> params ->
+            executionPlan.put(executionPlanKey, params)
+        }
+    }
+
+    private Map<String, Object> buildBaseParamMap() {
+
+        Map<String, Object> paramMap =
+                new LinkedHashMap<>()
+
+        paramMap.put("VALIDATE_MAP", true)
+
+        return paramMap
     }
 }

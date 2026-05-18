@@ -1,7 +1,7 @@
 package org.mycroftai.styxcd.orchestrator.execution.plan;
 
 import org.mycroftai.styxcd.orchestrator.workflow.WorkflowPlanner;
-import org.mycroftai.styxcd.orchestrator.workflow.cloud.CloudWorkflowPlanner;
+import org.mycroftai.styxcd.orchestrator.workflow.CloudWorkflowPlanner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

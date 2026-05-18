@@ -19,7 +19,22 @@ public class CloudWorkflowInitializeStagePlanner implements WorkflowStagePlanner
     }
 
     @Override
-    public Map<String, Object> getParams(
+    public Map<String, Map<String, Object>> getStages(
+            Map<String, Object> yml,
+            Map<String, Object> paramMap
+    ) {
+
+        Map<String, Map<String, Object>> stages = new LinkedHashMap<>();
+
+        stages.put(
+                stageType(),
+                getParams(yml, paramMap)
+        );
+
+        return stages;
+    }
+
+    private Map<String, Object> getParams(
             Map<String, Object> yml,
             Map<String, Object> paramMap
     ) {

@@ -44,7 +44,7 @@ class CloudWorkflow implements Workflow {
             paramMap['APPHOST_NAME'] = it?.name
             paramMap['VALIDATE_MAP'] = preprocessYml(yml)
 
-            if (it.build?.type == 'gradle') {
+            if (it.build_tool == 'gradle') {
                 jsonOutput["GradleBuild@${paramMap['APPHOST_NAME']}"] =
                         gradleBuild.getParams(yml, paramMap)
             }

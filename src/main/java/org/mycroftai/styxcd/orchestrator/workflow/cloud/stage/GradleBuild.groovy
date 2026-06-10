@@ -10,7 +10,7 @@ class GradleBuild {
 
         params['appHostName'] = paramMap['APPHOST_NAME']
         params['stagename'] = 'Build Gradle App - ' + paramMap['APPHOST_NAME']
-        params['label'] = ''
+        params['label'] = 'dev'
         params['VALIDATE_MAP'] = paramMap['VALIDATE_MAP']
         params['YML'] = yml
 

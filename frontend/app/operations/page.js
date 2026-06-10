@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const API_BASE_URL = 'http://orchestrator.styxcd.com';
 
@@ -24,12 +24,75 @@ export default function ExecutionsPage() {
     const [currentLifecycleEvent, setCurrentLifecycleEvent] = useState('');
     const [isRunning, setIsRunning] = useState(false);
     const [consoleLines, setConsoleLines] = useState([]);
+    const fileInputRef = useRef(null);
 
     const log = (message) => {
         setConsoleLines((lines) => [
             ...lines,
             `[${new Date().toLocaleTimeString()}] ${message}`
         ]);
+    };
+
+    const loadFile = () => {
+        fileInputRef.current?.click();
+    };
+
+    const onFileSelected = (event) => {
+        const file = event.target.files?.[0];
+
+        if (!file) {
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = (loadEvent) => {
+            setYml(loadEvent.target?.result || '');
+            log(`Loaded file: ${file.name}`);
+        };
+
+        reader.onerror = () => {
+            log(`ERROR loading file: ${file.name}`);
+        };
+
+        reader.readAsText(file);
+        event.target.value = '';
+    };
+
+    const loadUrl = async () => {
+        const url = window.prompt('Enter raw YAML URL');
+
+        if (!url) {
+            return;
+        }
+
+        try {
+            log(`Loading YAML from URL...`);
+
+            const response = await fetch(url, {
+                cache: 'no-store'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const text = await response.text();
+
+            setYml(text);
+            log(`Loaded YAML from URL`);
+        } catch (error) {
+            log(`ERROR loading URL: ${error.message}`);
+        }
+    };
+
+    const clearScreen = () => {
+        setYml('');
+        setExecutionId('');
+        setStatus('');
+        setCurrentLifecycleEvent('');
+        setConsoleLines([]);
+        setIsRunning(false);
     };
 
     const submitExecution = async () => {
@@ -148,13 +211,46 @@ export default function ExecutionsPage() {
                             style={textareaStyle}
                         />
 
-                        <button
-                            onClick={submitExecution}
-                            disabled={isRunning}
-                            style={buttonStyle}
-                        >
-                            {isRunning ? 'Running...' : 'Submit YML'}
-                        </button>
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept=".yaml,.yml,.txt"
+                            style={{ display: 'none' }}
+                            onChange={onFileSelected}
+                        />
+
+                        <div style={buttonRowStyle}>
+                            <button
+                                onClick={loadFile}
+                                disabled={isRunning}
+                                style={secondaryButtonStyle}
+                            >
+                                Load File
+                            </button>
+
+                            <button
+                                onClick={loadUrl}
+                                disabled={isRunning}
+                                style={secondaryButtonStyle}
+                            >
+                                Load URL
+                            </button>
+
+                            <button
+                                onClick={clearScreen}
+                                style={secondaryButtonStyle}
+                            >
+                                Clear
+                            </button>
+
+                            <button
+                                onClick={submitExecution}
+                                disabled={isRunning}
+                                style={buttonStyle}
+                            >
+                                {isRunning ? 'Running...' : 'Submit YML'}
+                            </button>
+                        </div>
                     </section>
 
                     <section style={cardStyle}>
@@ -244,13 +340,28 @@ const textareaStyle = {
     fontSize: 13
 };
 
-const buttonStyle = {
+const buttonRowStyle = {
+    display: 'flex',
+    gap: 8,
     marginTop: 12,
+    flexWrap: 'wrap'
+};
+
+const buttonStyle = {
     padding: '10px 14px',
     borderRadius: 8,
     border: '1px solid #2563eb',
     background: '#1d4ed8',
     color: 'white',
+    cursor: 'pointer'
+};
+
+const secondaryButtonStyle = {
+    padding: '10px 14px',
+    borderRadius: 8,
+    border: '1px solid #334155',
+    background: '#1e293b',
+    color: '#e2e8f0',
     cursor: 'pointer'
 };
 

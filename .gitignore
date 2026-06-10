@@ -5,3 +5,5 @@
 /frontend/.next/
 .idea/
 *.iml
+**/.DS_Store
+

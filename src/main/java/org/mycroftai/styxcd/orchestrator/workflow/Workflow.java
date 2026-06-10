@@ -2,7 +2,7 @@ package org.mycroftai.styxcd.orchestrator.workflow;
 
 import java.util.Map;
 
-public interface WorkflowPlanner {
+public interface Workflow {
 
     String workflowName();
 

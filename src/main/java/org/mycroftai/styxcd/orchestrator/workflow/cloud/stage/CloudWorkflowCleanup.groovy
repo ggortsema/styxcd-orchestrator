@@ -9,8 +9,8 @@ class CloudWorkflowCleanup {
         def params = [:]
 
         params['appHostName'] = paramMap['APPHOST_NAME']
-        params['stagename'] = "Build Gradle App - ${paramMap['APPHOST_NAME']}"
-        params['label'] = ''
+        params['stagename'] = "cleanup"
+        params['label'] = 'dev'
         params['VALIDATE_MAP'] = paramMap['VALIDATE_MAP']
         params['YML'] = yml
 

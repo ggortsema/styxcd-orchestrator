@@ -52,7 +52,7 @@ class CloudWorkflow implements Workflow {
             }
         }
 
-        if(yml.ekg) {
+        if(yml.gke) {
             jsonOutput["GkeSandbox"] = gkeSandbox.getParams(yml, paramMap)
         }
 

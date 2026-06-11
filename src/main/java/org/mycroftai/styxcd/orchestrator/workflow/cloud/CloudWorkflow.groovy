@@ -18,11 +18,13 @@ class CloudWorkflow implements Workflow {
     CloudWorkflow(
             CloudWorkflowInitialize cloudWorkflowInitialize,
             CloudWorkflowCleanup cloudWorkflowCleanup,
-            GradleBuild gradleBuild
+            GradleBuild gradleBuild,
+            GkeSandbox gkeSandbox
     ) {
         this.cloudWorkflowInitialize = cloudWorkflowInitialize
         this.cloudWorkflowCleanup = cloudWorkflowCleanup
         this.gradleBuild = gradleBuild
+        this.gkeSandbox = gkeSandbox
     }
 
     @Override

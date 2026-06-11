@@ -41,18 +41,18 @@ class CloudWorkflow implements Workflow {
         jsonOutput['CloudWorkflowInitialize'] =
                 cloudWorkflowInitialize.getParams(yml, paramMap)
 
-        yml.release.applications.spring.each {
+        yml?.release?.applications?.spring?.each {
             paramMap = [:]
             paramMap['APPHOST_NAME'] = it?.name
             paramMap['VALIDATE_MAP'] = preprocessYml(yml)
 
-            if (it.build_tool == 'gradle') {
+            if (it?.build_tool == 'gradle') {
                 jsonOutput["GradleBuild@${paramMap['APPHOST_NAME']}"] =
                         gradleBuild.getParams(yml, paramMap)
             }
         }
 
-        if(yml.gke) {
+        if(yml?.gke) {
             jsonOutput["GkeSandbox"] = gkeSandbox.getParams(yml, paramMap)
         }
 

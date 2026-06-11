@@ -3,6 +3,7 @@ package org.mycroftai.styxcd.orchestrator.workflow.cloud
 import org.mycroftai.styxcd.orchestrator.workflow.Workflow
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.CloudWorkflowCleanup
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.CloudWorkflowInitialize
+import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.GkeSandbox
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.GradleBuild
 import org.springframework.stereotype.Component
 
@@ -12,6 +13,7 @@ class CloudWorkflow implements Workflow {
     private final CloudWorkflowInitialize cloudWorkflowInitialize
     private final CloudWorkflowCleanup cloudWorkflowCleanup
     private final GradleBuild gradleBuild
+    private final GkeSandbox gkeSandbox
 
     CloudWorkflow(
             CloudWorkflowInitialize cloudWorkflowInitialize,
@@ -48,6 +50,10 @@ class CloudWorkflow implements Workflow {
                 jsonOutput["GradleBuild@${paramMap['APPHOST_NAME']}"] =
                         gradleBuild.getParams(yml, paramMap)
             }
+        }
+
+        if(yml.ekg) {
+            jsonOutput["GkeSandbox"] = gkeSandbox.getParams(yml, paramMap)
         }
 
         jsonOutput['CloudWorkflowCleanup@final'] =

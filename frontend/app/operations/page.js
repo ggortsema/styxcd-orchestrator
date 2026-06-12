@@ -4,17 +4,67 @@ import { useEffect, useRef, useState } from 'react';
 
 const API_BASE_URL = 'http://orchestrator.styxcd.com';
 
-const defaultYml = `workflow: 'cloud_workflow'
+const defaultYml = `workflow: cloud_workflow
+
 release:
-  name: styxcd-jenkins-build
+  name: johnny-platform-release
   version: 1.0.0
 
+  desired_state:
+    environment: present
+    applications: deployed
+
   applications:
+
     spring:
-      - name: styxcd-jenkins
-        repo: https://github.com/ggortsema/styxcd-jenkins.git
+      - name: johnny-johnny-backend
+        repo: https://github.com/ggortsema/johnny-johnny.git
         branch: main
-        build_tool: gradle`;
+        version: 1.0.0
+
+        build:
+          type: maven-docker
+          project_path: .
+          module_path: chat-api
+          dockerfile: chat-api/Dockerfile
+          docker_context: .
+
+        artifacts:
+          - type: docker-image
+            image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-backend:latest
+
+    node:
+      - name: johnny-johnny-ui
+        repo: https://github.com/ggortsema/johnny-johnny-ui.git
+        branch: main
+        version: 1.0.0
+
+        build:
+          type: docker
+          project_path: .
+          dockerfile: Dockerfile
+          docker_context: .
+
+        artifacts:
+          - type: docker-image
+            image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-ui:latest
+
+  environments:
+
+    sandbox:
+      - name: johnny-johnny-gke-sandbox
+        platform:
+          name: gke
+          project_id: styxcd-sandbox-grant
+          cluster_name: styxcd-sandbox-gke
+          location: us-east1-b
+          location_type: zonal
+          namespace: johnny-johnny
+
+          credentials:
+            gcp:
+              source: jenkins
+              id: gcp-service-account`;
 
 export default function ExecutionsPage() {
     const [activeTab, setActiveTab] = useState('current');

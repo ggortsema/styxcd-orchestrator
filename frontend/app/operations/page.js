@@ -62,9 +62,8 @@ release:
           namespace: johnny-johnny
 
           credentials:
-            gcp:
-              source: jenkins
-              id: gcp-service-account`;
+            source: jenkins
+            id: gcp-service-account`;
 
 export default function ExecutionsPage() {
     const [activeTab, setActiveTab] = useState('current');

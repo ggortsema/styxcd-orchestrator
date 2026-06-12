@@ -1,0 +1,14 @@
+workflow: 'cloud_workflow'
+release:
+  applications:
+    spring:
+      - name: johnny-johnny-backend
+        repo: https://github.com/ggortsema/johnny-johnny.git
+  environments:
+    sandbox:
+      - platform:
+          name: ec2
+          deply_script: ./deploy/deploy.sh
+          credentials:
+              source: jenkins
+              id: gcp-service-account

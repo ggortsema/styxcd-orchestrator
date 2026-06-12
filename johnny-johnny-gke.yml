@@ -56,6 +56,5 @@ release:
           namespace: johnny-johnny
 
           credentials:
-            gcp:
-              source: jenkins
-              id: gcp-service-account
+            source: jenkins
+            id: gcp-service-account

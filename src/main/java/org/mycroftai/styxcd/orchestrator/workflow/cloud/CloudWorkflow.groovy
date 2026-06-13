@@ -62,7 +62,7 @@ class CloudWorkflow implements Workflow {
                     paramMap['APPHOST_NAME'] = app?.name
                     if(!app?.skip_deploy) {
                         if(target?.platform?.name == 'gke') {
-                            jsonOutput["GkeSandbox@${paramMap['APPHOST_NAME']}${lifecycle}${target?.name}"] = GkeSandbox.getParams(yml, paramMap)
+                            jsonOutput["GkeSandbox@${paramMap['APPHOST_NAME']}${lifecycle}${target?.name}"] = gkeSandbox.getParams(yml, paramMap)
                         }
                     }
                 }

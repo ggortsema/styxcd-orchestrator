@@ -60,7 +60,6 @@ release:
             image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-ui:latest
 
   environments:
-
     sandbox:
       - name: johnny-johnny-gke-sandbox
         platform:
@@ -74,15 +73,16 @@ release:
           credentials:
             source: jenkins
             id: gcp-service-account
-      - name: johnny-johnny-gke-sandbox-2
-        platform:
-          name: gke
-          project_id: styxcd-sandbox-grant
-          cluster_name: styxcd-sandbox-gke
-          location: us-east1-b
-          location_type: zonal
-          namespace: johnny-johnny
 
-          credentials:
-            source: jenkins
-            id: gcp-service-account
+          defaults:
+            replicas: 1
+            service:
+              type: ClusterIP
+
+          applications:
+            - name: johnny-johnny-backend
+              container:
+                port: 8080
+              service:
+                port: 80
+                target_port: 8080

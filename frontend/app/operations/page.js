@@ -33,6 +33,22 @@ release:
           - type: docker-image
             image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-backend:latest
 
+      - name: johnny-johnny-backend-2
+        repo: https://github.com/ggortsema/johnny-johnny.git
+        branch: main
+        version: 1.0.0
+
+        build:
+          type: maven-docker
+          project_path: .
+          module_path: chat-api
+          dockerfile: chat-api/Dockerfile
+          docker_context: .
+
+        artifacts:
+          - type: docker-image
+            image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-backend:latest
+
     node:
       - name: johnny-johnny-ui
         repo: https://github.com/ggortsema/johnny-johnny-ui.git
@@ -50,7 +66,6 @@ release:
             image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-ui:latest
 
   environments:
-
     sandbox:
       - name: johnny-johnny-gke-sandbox
         platform:
@@ -63,7 +78,21 @@ release:
 
           credentials:
             source: jenkins
-            id: gcp-service-account`;
+            id: gcp-service-account
+
+          defaults:
+            replicas: 1
+            service:
+              type: ClusterIP
+
+          applications:
+            - name: johnny-johnny-backend
+              container:
+                port: 8080
+              service:
+                port: 80
+                target_port: 8080
+`;
 
 export default function ExecutionsPage() {
     const [activeTab, setActiveTab] = useState('current');

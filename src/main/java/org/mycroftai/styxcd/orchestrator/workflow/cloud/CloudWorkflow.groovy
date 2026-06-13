@@ -91,22 +91,47 @@ class CloudWorkflow implements Workflow {
                 paramMap['TARGET_NAME'] = target?.name
                 paramMap['VALIDATE_MAP'] = preprocessYml
 
-                if(target?.platform?.name == 'gke') {
+//                if(target?.platform?.name == 'gke') {
+//
+//                    jsonOutput["GkeCreateNamespace@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeCreateNamespace.getParams(yml, paramMap)
+//
+//                    yml.release?.applications?.spring?.each { app ->
+//
+//                        paramMap['APP_NAME'] = app?.name
+//                        jsonOutput["GkeDeployApplication@${paramMap['APP_NAME']}${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeDeployApplication.getParams(yml, paramMap)
+//                        jsonOutput["GkeValidateDeployment@${paramMap['APP_NAME']}${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeValidateDeployment.getParams(yml, paramMap)
+//
+//                    }
+//
+//                    jsonOutput["GkeCreateIngress@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeCreateIngress.getParams(yml, paramMap)
+//                    jsonOutput["GkeConfigureDns@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeConfigureDns.getParams(yml, paramMap)
+//                    jsonOutput["GkeValidateService@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeValidateService.getParams(yml, paramMap)
+//
+//                }
+
+                if (target?.platform?.name == 'gke') {
 
                     jsonOutput["GkeCreateNamespace@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeCreateNamespace.getParams(yml, paramMap)
 
-                    yml.release?.applications?.spring?.each { app ->
+                    target?.platform?.applications?.each { targetApp ->
 
-                        paramMap['APP_NAME'] = app?.name
+                        def appName = targetApp?.name
+                        def app = yml.release?.applications?.values()?.flatten()?.find { it?.name == appName }
+
+                        //TODO move this into preprocess yml
+                        if (!app) {
+                            throw new RuntimeException("GKE target application '${appName}' was listed for target '${paramMap['TARGET_NAME']}' but no matching release application was found.")
+                        }
+
+                        paramMap['APP_NAME'] = appName
+
                         jsonOutput["GkeDeployApplication@${paramMap['APP_NAME']}${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeDeployApplication.getParams(yml, paramMap)
                         jsonOutput["GkeValidateDeployment@${paramMap['APP_NAME']}${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeValidateDeployment.getParams(yml, paramMap)
-
                     }
 
                     jsonOutput["GkeCreateIngress@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeCreateIngress.getParams(yml, paramMap)
                     jsonOutput["GkeConfigureDns@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeConfigureDns.getParams(yml, paramMap)
                     jsonOutput["GkeValidateService@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = gkeValidateService.getParams(yml, paramMap)
-
                 }
             }
         }

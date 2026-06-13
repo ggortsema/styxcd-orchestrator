@@ -7,7 +7,7 @@ class GkeValidateService {
     Map getParams(yml, paramMap) {
         def params = [:]
 
-        params['stagename'] = 'Gke Configure DNS'
+        params['stagename'] = 'Gke Validate Service'
         params['label'] = 'dev'
         params['VALIDATE_MAP'] = paramMap['VALIDATE_MAP']
         params['YML'] = yml

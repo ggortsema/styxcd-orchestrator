@@ -54,8 +54,19 @@ class CloudWorkflow implements Workflow {
             }
         }
 
-        if(yml?.gke) {
-            jsonOutput["GkeSandbox"] = gkeSandbox.getParams(yml, paramMap)
+        def envList = ['sandbox', 'dev', 'qa', 'stage', 'prod']
+
+        envList.each { lifecycle ->
+            yml.release?.environments?."${lifecycle}"?.each { target ->
+                yml.release?.applications?.spring?.each { app ->
+                    paramMap['APPHOST_NAME'] = app?.name
+                    if(!app?.skip_deploy) {
+                        if(target?.platform?.name == 'gke') {
+                            jsonOutput["GkeSandbox@${paramMap['APPHOST_NAME']}${lifecycle}${target?.name}"] = GkeSandbox.getParams(yml, paramMap)
+                        }
+                    }
+                }
+            }
         }
 
         jsonOutput['CloudWorkflowCleanup@final'] =

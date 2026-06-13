@@ -92,6 +92,11 @@ release:
               service:
                 port: 80
                 target_port: 8080
+              secrets:
+                - env_name: OPENAI_API_KEY
+                  source:
+                    type: jenkins-credential
+                    credential_id: openai-api-key
 `;
 
 export default function ExecutionsPage() {

@@ -7,7 +7,7 @@ class GkeValidateDeployment {
     Map getParams(yml, paramMap) {
         def params = [:]
 
-        params['stagename'] = 'Gke Validate Deployment'
+        params['stagename'] = 'GKE Validate Deployment - ' + paramMap['APP_NAME'] + ' / ' + paramMap['LIFECYCLE'] + ' / ' + params['PLATFORM_NAME']  + ' / ' + params['TARGET_NAME']
         params['label'] = 'dev'
         params['VALIDATE_MAP'] = paramMap['VALIDATE_MAP']
         params['YML'] = yml

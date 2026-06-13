@@ -7,7 +7,7 @@ class GkeCreateNamespace {
     Map getParams(yml, paramMap) {
         def params = [:]
 
-        params['stagename'] = 'Gke Create Namespace'
+        params['stagename'] = 'GKE Create Namespace: ' + paramMap['LIFECYCLE'] + ' / ' + params['PLATFORM_NAME']  + ' / ' + params['TARGET_NAME']
         params['label'] = 'dev'
         params['VALIDATE_MAP'] = paramMap['VALIDATE_MAP']
         params['YML'] = yml

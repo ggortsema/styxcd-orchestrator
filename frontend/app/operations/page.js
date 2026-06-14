@@ -88,18 +88,21 @@ release:
           ingress:
             enabled: true
             name: johnny-johnny-ingress
-            host: johnny-johnny.styxcd.com
             class_name: gce
-            routes:
-              - path: /
-                path_type: Prefix
-                service: johnny-johnny-ui
-                port: 80
+            hosts:
+              - host: johnny-johnny.styxcd.com
+                routes:
+                  - path: /
+                    path_type: Prefix
+                    service: johnny-johnny-ui
+                    port: 80
 
-              - path: /api
-                path_type: Prefix
-                service: johnny-johnny-backend
-                port: 80
+              - host: api.johnny-johnny.styxcd.com
+                routes:
+                  - path: /
+                    path_type: Prefix
+                    service: johnny-johnny-backend
+                    port: 80
 
           dns:
             enabled: true
@@ -132,6 +135,9 @@ release:
               service:
                 port: 80
                 target_port: 3000
+              env:
+                - name: NEXT_PUBLIC_API_URL
+                  value: http://api.johnny-johnny.styxcd.com
 `;
 
 export default function ExecutionsPage() {

@@ -69,7 +69,7 @@ release:
     sandbox:
       - name: johnny-johnny-gke-sandbox
         platform:
-          name: gke
+          name: eks
           project_id: styxcd-sandbox-grant
           cluster_name: styxcd-sandbox-gke
           location: us-east1-b

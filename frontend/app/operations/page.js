@@ -69,7 +69,7 @@ release:
     sandbox:
       - name: johnny-johnny-gke-sandbox
         platform:
-          name: eks
+          name: gke
           project_id: styxcd-sandbox-grant
           cluster_name: styxcd-sandbox-gke
           location: us-east1-b
@@ -90,14 +90,14 @@ release:
             name: johnny-johnny-ingress
             class_name: gce
             hosts:
-              - host: johnny-johnny.styxcd.com
+              - host: johnny-johnny.mycroftai.org
                 routes:
                   - path: /
                     path_type: Prefix
                     service: johnny-johnny-ui
                     port: 80
 
-              - host: api.johnny-johnny.styxcd.com
+              - host: api.johnny-johnny.mycroftai.org
                 routes:
                   - path: /
                     path_type: Prefix
@@ -107,8 +107,8 @@ release:
           dns:
             enabled: true
             provider: route53
-            hosted_zone: styxcd.com
-            record_name: johnny-johnny.styxcd.com.
+            hosted_zone: mycroftai.org
+            record_name: johnny-johnny.mycroftai.org.
             record_type: A
             ttl: 300
             credentials:
@@ -141,7 +141,7 @@ release:
                 target_port: 3000
               env:
                 - name: NEXT_PUBLIC_API_URL
-                  value: http://api.johnny-johnny.styxcd.com
+                  value: http://api.johnny-johnny.mycroftai.org
 `;
 
 export default function ExecutionsPage() {

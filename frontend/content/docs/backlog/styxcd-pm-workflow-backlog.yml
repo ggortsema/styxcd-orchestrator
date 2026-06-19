@@ -1,0 +1,585 @@
+workflow: pm_workflow
+
+provider:
+  type: github
+  repository: ggortsema/styxcd-docs
+  project: mycroftai engineering roadmap
+  jenkins_creds: mycred
+
+epics:
+  - name: "Epic: GKE Workflow"
+    description: "Implement Google Kubernetes Engine (GKE) as a first-class deployment target within StyxCD."
+    acceptanceCriteria:
+      - "GKE is supported as a first-class StyxCD deployment target."
+      - "Applications can be deployed to GKE through a StyxCD workflow."
+      - "Authentication and credential management strategy is defined."
+      - "Deployment validation is supported."
+      - "Rollback capability is supported."
+      - "Workflow DSL supports GKE-specific configuration."
+      - "End-to-end deployment can be demonstrated using StyxCD."
+    issues:
+      - name: "Implement GKE Deployment Stage"
+        description: "TODO: Define scope and acceptance criteria for Implement GKE Deployment Stage."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Define GKE Authentication Strategy"
+        description: "TODO: Define scope and acceptance criteria for Define GKE Authentication Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Deploy Sample Application to GKE"
+        description: "TODO: Define scope and acceptance criteria for Deploy Sample Application to GKE."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add GKE Rollback Support"
+        description: "TODO: Define scope and acceptance criteria for Add GKE Rollback Support."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add GKE Deployment Validation"
+        description: "TODO: Define scope and acceptance criteria for Add GKE Deployment Validation."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Define GKE Deployment Model"
+        description: "TODO: Define scope and acceptance criteria for Define GKE Deployment Model."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement GKE Sandbox Environment Support"
+        description: "TODO: Define scope and acceptance criteria for Implement GKE Sandbox Environment Support."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Workflow Templates & Effective YAML"
+    description: "Implement reusable workflow templates and an Effective YAML capability."
+    acceptanceCriteria:
+      - "Workflow templates are supported."
+      - "Variable substitution is supported."
+      - "Template inheritance/composition is supported."
+      - "Effective YAML can be generated before execution."
+      - "Effective YAML can be viewed in the UI."
+      - "Users can validate resolved workflows prior to execution."
+    issues:
+      - name: "Design Workflow Template Model"
+        description: "TODO: Define scope and acceptance criteria for Design Workflow Template Model."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Template Resolution Engine"
+        description: "TODO: Define scope and acceptance criteria for Implement Template Resolution Engine."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Effective YAML Generation"
+        description: "TODO: Define scope and acceptance criteria for Implement Effective YAML Generation."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Display Effective YAML in UI"
+        description: "TODO: Define scope and acceptance criteria for Display Effective YAML in UI."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Workflow Validation Against Effective YAML"
+        description: "TODO: Define scope and acceptance criteria for Implement Workflow Validation Against Effective YAML."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Platform Workflow Templates"
+        description: "TODO: Define scope and acceptance criteria for Create Platform Workflow Templates."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Support Template Versioning"
+        description: "TODO: Define scope and acceptance criteria for Support Template Versioning."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Template Catalog UI"
+        description: "TODO: Define scope and acceptance criteria for Create Template Catalog UI."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Template Resolution Testing Strategy"
+        description: "TODO: Define scope and acceptance criteria for Add Template Resolution Testing Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Platform Security"
+    description: "Implement the security foundation for StyxCD."
+    acceptanceCriteria:
+      - "Authentication strategy is defined."
+      - "Service-to-service authentication is implemented."
+      - "Sensitive credentials are managed securely."
+      - "Authorization model is documented."
+      - "Security architecture is documented."
+    issues:
+      - name: "Evaluate Control Plane Authentication Strategy"
+        description: "TODO: Define scope and acceptance criteria for Evaluate Control Plane Authentication Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Control Plane Authentication"
+        description: "TODO: Define scope and acceptance criteria for Implement Control Plane Authentication."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Define Service-to-Service Authentication Model"
+        description: "TODO: Define scope and acceptance criteria for Define Service-to-Service Authentication Model."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Secure Jenkins Callback Endpoints"
+        description: "TODO: Define scope and acceptance criteria for Secure Jenkins Callback Endpoints."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Secrets Management Strategy"
+        description: "TODO: Define scope and acceptance criteria for Implement Secrets Management Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Define Authorization and RBAC Model"
+        description: "TODO: Define scope and acceptance criteria for Define Authorization and RBAC Model."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Secure Workflow Credential Usage"
+        description: "TODO: Define scope and acceptance criteria for Secure Workflow Credential Usage."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Audit Security-Sensitive Actions"
+        description: "TODO: Define scope and acceptance criteria for Audit Security-Sensitive Actions."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Define Multi-Tenant Security Requirements"
+        description: "TODO: Define scope and acceptance criteria for Define Multi-Tenant Security Requirements."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Security Architecture Documentation"
+        description: "TODO: Define scope and acceptance criteria for Create Security Architecture Documentation."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Testing Strategy"
+    description: "Establish a comprehensive testing strategy for StyxCD."
+    issues:
+      - name: "Add YAML Parsing Tests"
+        description: "TODO: Define scope and acceptance criteria for Add YAML Parsing Tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Execution Plan Generation Tests"
+        description: "TODO: Define scope and acceptance criteria for Add Execution Plan Generation Tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Workflow Planner Tests"
+        description: "TODO: Define scope and acceptance criteria for Add Workflow Planner Tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Stage Inclusion Tests"
+        description: "TODO: Define scope and acceptance criteria for Add Stage Inclusion Tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Callback Processing Tests"
+        description: "TODO: Define scope and acceptance criteria for Add Callback Processing Tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Controller/API Tests"
+        description: "TODO: Define scope and acceptance criteria for Add Controller/API Tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Behavior Testing Framework"
+        description: "TODO: Define scope and acceptance criteria for Create Behavior Testing Framework."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create End-to-End Workflow Test Suite"
+        description: "TODO: Define scope and acceptance criteria for Create End-to-End Workflow Test Suite."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Local Testing Harness"
+        description: "TODO: Define scope and acceptance criteria for Add Local Testing Harness."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Docker Compose Development Environment"
+        description: "TODO: Define scope and acceptance criteria for Add Docker Compose Development Environment."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Dogfooding StyxCD"
+    description: "Deploy and manage StyxCD using StyxCD."
+    issues:
+      - name: "Deploy StyxCD Using StyxCD"
+        description: "TODO: Define scope and acceptance criteria for Deploy StyxCD Using StyxCD."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create StyxCD Release Workflow"
+        description: "TODO: Define scope and acceptance criteria for Create StyxCD Release Workflow."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create StyxCD Promotion Workflow"
+        description: "TODO: Define scope and acceptance criteria for Create StyxCD Promotion Workflow."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement StyxCD Self-Update Workflow"
+        description: "TODO: Define scope and acceptance criteria for Implement StyxCD Self-Update Workflow."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Validate Upgrade Scenarios"
+        description: "TODO: Define scope and acceptance criteria for Validate Upgrade Scenarios."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Document Internal Release Process"
+        description: "TODO: Define scope and acceptance criteria for Document Internal Release Process."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Release Management"
+    description: "Establish repeatable release and promotion processes."
+    issues:
+      - name: "Define Stable Environment Strategy"
+        description: "TODO: Define scope and acceptance criteria for Define Stable Environment Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Define Development Environment Strategy"
+        description: "TODO: Define scope and acceptance criteria for Define Development Environment Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Promotion Workflow"
+        description: "TODO: Define scope and acceptance criteria for Implement Promotion Workflow."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Version Management Strategy"
+        description: "TODO: Define scope and acceptance criteria for Implement Version Management Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Document Release Process"
+        description: "TODO: Define scope and acceptance criteria for Document Release Process."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Release Validation Checks"
+        description: "TODO: Define scope and acceptance criteria for Add Release Validation Checks."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Multi-Cloud Support"
+    description: "Expand StyxCD beyond a single cloud provider."
+    issues:
+      - name: "Complete GKE Vertical Slice"
+        description: "TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Expand ECS Deployment Support"
+        description: "TODO: Define scope and acceptance criteria for Expand ECS Deployment Support."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Expand EKS Deployment Support"
+        description: "TODO: Define scope and acceptance criteria for Expand EKS Deployment Support."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Evaluate AKS Support"
+        description: "TODO: Define scope and acceptance criteria for Evaluate AKS Support."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Define Multi-Cloud Abstraction Strategy"
+        description: "TODO: Define scope and acceptance criteria for Define Multi-Cloud Abstraction Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Cloud Capability Matrix"
+        description: "TODO: Define scope and acceptance criteria for Create Cloud Capability Matrix."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Validation & Deployment Verification"
+    description: "Provide standardized deployment validation across platforms."
+    issues:
+      - name: "Define Validation Contract"
+        description: "TODO: Define scope and acceptance criteria for Define Validation Contract."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Validation Framework"
+        description: "TODO: Define scope and acceptance criteria for Implement Validation Framework."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Health Check Validation"
+        description: "TODO: Define scope and acceptance criteria for Add Health Check Validation."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Smoke Test Validation"
+        description: "TODO: Define scope and acceptance criteria for Add Smoke Test Validation."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Deployment Verification Reporting"
+        description: "TODO: Define scope and acceptance criteria for Add Deployment Verification Reporting."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Validation Dashboard Support"
+        description: "TODO: Define scope and acceptance criteria for Add Validation Dashboard Support."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: SLO-Aware Promotion"
+    description: "Support promotion decisions using measurable deployment outcomes."
+    issues:
+      - name: "Define Measurement Contract"
+        description: "TODO: Define scope and acceptance criteria for Define Measurement Contract."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Capture Validation Metrics"
+        description: "TODO: Define scope and acceptance criteria for Capture Validation Metrics."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Store Validation Results"
+        description: "TODO: Define scope and acceptance criteria for Store Validation Results."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Evaluate SLO Thresholds"
+        description: "TODO: Define scope and acceptance criteria for Evaluate SLO Thresholds."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Support Promotion Gates"
+        description: "TODO: Define scope and acceptance criteria for Support Promotion Gates."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Document SLO Promotion Model"
+        description: "TODO: Define scope and acceptance criteria for Document SLO Promotion Model."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Artifact Management"
+    description: "Support enterprise artifact promotion and governance patterns."
+    issues:
+      - name: "Define Artifact Metadata Model"
+        description: "TODO: Define scope and acceptance criteria for Define Artifact Metadata Model."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Track Digest-Based Deployments"
+        description: "TODO: Define scope and acceptance criteria for Track Digest-Based Deployments."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Support Registry Replication"
+        description: "TODO: Define scope and acceptance criteria for Support Registry Replication."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Store Promotion History"
+        description: "TODO: Define scope and acceptance criteria for Store Promotion History."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Artifact Audit Trail"
+        description: "TODO: Define scope and acceptance criteria for Implement Artifact Audit Trail."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Document Enterprise Artifact Strategy"
+        description: "TODO: Define scope and acceptance criteria for Document Enterprise Artifact Strategy."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Observability"
+    description: "Provide operational visibility into StyxCD."
+    issues:
+      - name: "Add Prometheus Metrics"
+        description: "TODO: Define scope and acceptance criteria for Add Prometheus Metrics."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Grafana Dashboards"
+        description: "TODO: Define scope and acceptance criteria for Add Grafana Dashboards."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Expand Structured Logging"
+        description: "TODO: Define scope and acceptance criteria for Expand Structured Logging."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Track Workflow Metrics"
+        description: "TODO: Define scope and acceptance criteria for Track Workflow Metrics."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Track Stage Metrics"
+        description: "TODO: Define scope and acceptance criteria for Track Stage Metrics."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Deployment Analytics"
+        description: "TODO: Define scope and acceptance criteria for Add Deployment Analytics."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Documentation & Knowledge Base"
+    description: "Create a comprehensive documentation experience for StyxCD."
+    issues:
+      - name: "Create Architecture Documentation"
+        description: "TODO: Define scope and acceptance criteria for Create Architecture Documentation."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Workflow Authoring Guide"
+        description: "TODO: Define scope and acceptance criteria for Create Workflow Authoring Guide."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Platform Guides"
+        description: "TODO: Define scope and acceptance criteria for Create Platform Guides."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Troubleshooting Guide"
+        description: "TODO: Define scope and acceptance criteria for Create Troubleshooting Guide."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Knowledge Base Structure"
+        description: "TODO: Define scope and acceptance criteria for Create Knowledge Base Structure."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Example Workflow Library"
+        description: "TODO: Define scope and acceptance criteria for Create Example Workflow Library."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Local Development Experience"
+    description: "Improve developer productivity and testing."
+    issues:
+      - name: "Add In-Memory Database Mode"
+        description: "TODO: Define scope and acceptance criteria for Add In-Memory Database Mode."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Docker Compose Environment"
+        description: "TODO: Define scope and acceptance criteria for Create Docker Compose Environment."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Support Local Workflow Execution"
+        description: "TODO: Define scope and acceptance criteria for Support Local Workflow Execution."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Improve Developer Setup Documentation"
+        description: "TODO: Define scope and acceptance criteria for Improve Developer Setup Documentation."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Local Demo Environment"
+        description: "TODO: Define scope and acceptance criteria for Create Local Demo Environment."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: UI Enhancements"
+    description: "Expand StyxCD usability and workflow authoring experience."
+    issues:
+      - name: "Load YAML From File"
+        description: "TODO: Define scope and acceptance criteria for Load YAML From File."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Load YAML From URL"
+        description: "TODO: Define scope and acceptance criteria for Load YAML From URL."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Create Workflow Templates UI"
+        description: "TODO: Define scope and acceptance criteria for Create Workflow Templates UI."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Display Effective YAML"
+        description: "TODO: Define scope and acceptance criteria for Display Effective YAML."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Improve Mobile Experience"
+        description: "TODO: Define scope and acceptance criteria for Improve Mobile Experience."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Execution Filtering"
+        description: "TODO: Define scope and acceptance criteria for Add Execution Filtering."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Execution Comparison View"
+        description: "TODO: Define scope and acceptance criteria for Add Execution Comparison View."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Add Template Catalog UI"
+        description: "TODO: Define scope and acceptance criteria for Add Template Catalog UI."
+        labels: []
+        assignees: []
+        milestone: ""
+  - name: "Epic: Planning & Decision Engine"
+    description: "Evolve workflow planning into a semantic decision system."
+    issues:
+      - name: "Define PlanningDecision Model"
+        description: "TODO: Define scope and acceptance criteria for Define PlanningDecision Model."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Integrate Drools Decision Engine"
+        description: "TODO: Define scope and acceptance criteria for Integrate Drools Decision Engine."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Separate Planning From Execution"
+        description: "TODO: Define scope and acceptance criteria for Separate Planning From Execution."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Implement Decision Rules Framework"
+        description: "TODO: Define scope and acceptance criteria for Implement Decision Rules Framework."
+        labels: []
+        assignees: []
+        milestone: ""
+      - name: "Document Planning Architecture"
+        description: "TODO: Define scope and acceptance criteria for Document Planning Architecture."
+        labels: []
+        assignees: []
+        milestone: ""

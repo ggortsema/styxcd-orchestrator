@@ -1,0 +1,960 @@
+workflow: pm_workflow
+provider:
+  type: github
+  repository: ggortsema/styxcd-docs
+  project: mycroftai engineering roadmap
+  jenkins_creds: mycred
+epics:
+- name: 'Epic: Project Management Workflow Provider'
+  description: Implement a StyxCD workflow that can create, update, synchronize, and migrate roadmap items across project-management
+    providers using YAML as the durable source of truth.
+  acceptanceCriteria:
+  - Project-management workflows can be represented as YAML.
+  - GitHub Issues and GitHub Projects are supported as the first provider target.
+  - Epics and child issues can be created from YAML.
+  - Workflow execution supports dry-run and idempotency.
+  - Provider issue IDs and URLs can be synchronized back into YAML.
+  - Provider migration is possible without losing the roadmap-as-code source.
+  issues:
+  - name: Define PM Workflow DSL
+    description: Define the YAML structure for project-management workflows, including provider configuration, epics, issues,
+      labels, assignees, milestones, acceptance criteria, and provider metadata.
+    acceptanceCriteria:
+    - PM workflow YAML schema is documented.
+    - Epics and issues are represented clearly.
+    - Optional fields such as labels, assignees, and milestones are supported.
+    - Provider-specific metadata can be stored without polluting the portable model.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement GitHub Issues Provider
+    description: Implement the first PM workflow provider using the GitHub API to create roadmap issues in the configured
+      repository.
+    acceptanceCriteria:
+    - GitHub provider can authenticate using Jenkins credentials.
+    - Provider can create epic issues.
+    - Provider can create child issues.
+    - Provider can apply labels, assignees, and milestones when supplied.
+    - Provider errors are reported clearly.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support Epic and Sub-Issue Creation
+    description: Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship
+      model.
+    acceptanceCriteria:
+    - Epic issue is created first.
+    - Child issues are created under the correct epic.
+    - Parent-child relationships are preserved.
+    - Created items are added to the configured project board.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support GitHub Project Assignment
+    description: Add created or updated issues to the configured GitHub Project board.
+    acceptanceCriteria:
+    - Project can be identified from YAML configuration.
+    - Created epics are added to the project.
+    - Created issues are added to the project.
+    - Default status can be set when supported.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add PM Workflow Dry-Run Mode
+    description: Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider.
+    acceptanceCriteria:
+    - Dry-run mode performs no writes.
+    - Dry-run output lists epics and issues that would be created.
+    - Dry-run output lists items that would be updated.
+    - Dry-run output identifies potential duplicates or conflicts.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support PM Workflow Idempotency
+    description: Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist.
+    acceptanceCriteria:
+    - Existing epics are detected.
+    - Existing issues are detected.
+    - Matching can use provider ID when available.
+    - Matching can fall back to title when ID is missing.
+    - Duplicate creation is prevented.
+    - Dry-run output reports create/update/no-op actions.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Synchronize PM Workflow YAML From Provider
+    description: Read existing epics and issues from a project-management provider and update local PM workflow YAML with
+      provider identifiers, links, and status metadata.
+    acceptanceCriteria:
+    - Existing provider issues can be fetched.
+    - Issues are matched to YAML entries by title.
+    - Provider issue IDs are written back to YAML.
+    - Provider URLs are written back to YAML.
+    - Existing YAML descriptions are preserved.
+    - Missing or renamed issues are reported.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support Provider Metadata in PM Workflow YAML
+    description: Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp,
+      Jira, or future providers.
+    acceptanceCriteria:
+    - Provider-specific IDs are stored under provider metadata.
+    - Portable fields remain provider-neutral.
+    - Multiple provider mappings can be represented.
+    - Provider metadata structure is documented.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support Provider Migration for PM Workflows
+    description: Allow the same roadmap YAML to be projected into a different project-management provider.
+    acceptanceCriteria:
+    - PM workflow provider model is abstracted.
+    - Provider-specific IDs are stored separately.
+    - YAML can support multiple provider mappings.
+    - Roadmap can be recreated in a new provider.
+    - Migration process is documented.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Generate PM Workflow YAML From Conversation
+    description: Use an AI-assisted step to transform roadmap discussion or session notes into PM workflow YAML.
+    acceptanceCriteria:
+    - Conversation/session notes can be converted into PM workflow YAML.
+    - Generated YAML follows the PM workflow schema.
+    - Generated YAML can be reviewed before execution.
+    - Generated YAML can be committed to styxcd-docs.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Demonstrate Backlog-as-Code Workflow
+    description: Use StyxCD to create or update a real project-management backlog from committed PM workflow YAML.
+    acceptanceCriteria:
+    - PM workflow YAML exists in styxcd-docs.
+    - Workflow can be executed through StyxCD.
+    - GitHub issues are created or updated.
+    - Execution output shows create/update/no-op results.
+    - Demo is documented.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: GKE Workflow'
+  description: Implement Google Kubernetes Engine (GKE) as a first-class deployment target within StyxCD.
+  acceptanceCriteria:
+  - GKE is supported as a first-class StyxCD deployment target.
+  - Applications can be deployed to GKE through a StyxCD workflow.
+  - Authentication and credential management strategy is defined.
+  - Deployment validation is supported.
+  - Rollback capability is supported.
+  - Workflow DSL supports GKE-specific configuration.
+  - End-to-end deployment can be demonstrated using StyxCD.
+  issues:
+  - name: Implement GKE Deployment Stage
+    description: 'TODO: Define scope and acceptance criteria for Implement GKE Deployment Stage.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define GKE Authentication Strategy
+    description: 'TODO: Define scope and acceptance criteria for Define GKE Authentication Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Deploy Sample Application to GKE
+    description: 'TODO: Define scope and acceptance criteria for Deploy Sample Application to GKE.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add GKE Rollback Support
+    description: 'TODO: Define scope and acceptance criteria for Add GKE Rollback Support.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add GKE Deployment Validation
+    description: 'TODO: Define scope and acceptance criteria for Add GKE Deployment Validation.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define GKE Deployment Model
+    description: 'TODO: Define scope and acceptance criteria for Define GKE Deployment Model.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement GKE Sandbox Environment Support
+    description: 'TODO: Define scope and acceptance criteria for Implement GKE Sandbox Environment Support.'
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Workflow Templates & Effective YAML'
+  description: Implement reusable workflow templates and an Effective YAML capability.
+  acceptanceCriteria:
+  - Workflow templates are supported.
+  - Variable substitution is supported.
+  - Template inheritance/composition is supported.
+  - Effective YAML can be generated before execution.
+  - Effective YAML can be viewed in the UI.
+  - Users can validate resolved workflows prior to execution.
+  issues:
+  - name: Design Workflow Template Model
+    description: 'TODO: Define scope and acceptance criteria for Design Workflow Template Model.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Template Resolution Engine
+    description: 'TODO: Define scope and acceptance criteria for Implement Template Resolution Engine.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Effective YAML Generation
+    description: 'TODO: Define scope and acceptance criteria for Implement Effective YAML Generation.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Display Effective YAML in UI
+    description: 'TODO: Define scope and acceptance criteria for Display Effective YAML in UI.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Workflow Validation Against Effective YAML
+    description: 'TODO: Define scope and acceptance criteria for Implement Workflow Validation Against Effective YAML.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Platform Workflow Templates
+    description: 'TODO: Define scope and acceptance criteria for Create Platform Workflow Templates.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support Template Versioning
+    description: 'TODO: Define scope and acceptance criteria for Support Template Versioning.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Template Catalog UI
+    description: 'TODO: Define scope and acceptance criteria for Create Template Catalog UI.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Template Resolution Testing Strategy
+    description: 'TODO: Define scope and acceptance criteria for Add Template Resolution Testing Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Design Effective YAML Help Experience
+    description: Define how users should understand resolved YAML, template expansion, and final execution inputs before a
+      workflow runs.
+    acceptanceCriteria:
+    - Effective YAML view requirements are documented.
+    - Help files explain how raw YAML becomes effective YAML.
+    - Resolved examples show platform defaults, template inheritance, and provider-specific values.
+    - Effective YAML is positioned as an audit/debugging aid.
+    - Future RAG retrieval use cases are considered in the documentation format.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Platform Security'
+  description: Implement the security foundation for StyxCD.
+  acceptanceCriteria:
+  - Authentication strategy is defined.
+  - Service-to-service authentication is implemented.
+  - Sensitive credentials are managed securely.
+  - Authorization model is documented.
+  - Security architecture is documented.
+  issues:
+  - name: Evaluate Control Plane Authentication Strategy
+    description: 'TODO: Define scope and acceptance criteria for Evaluate Control Plane Authentication Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Control Plane Authentication
+    description: 'TODO: Define scope and acceptance criteria for Implement Control Plane Authentication.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Service-to-Service Authentication Model
+    description: 'TODO: Define scope and acceptance criteria for Define Service-to-Service Authentication Model.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Secure Jenkins Callback Endpoints
+    description: 'TODO: Define scope and acceptance criteria for Secure Jenkins Callback Endpoints.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Secrets Management Strategy
+    description: 'TODO: Define scope and acceptance criteria for Implement Secrets Management Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Authorization and RBAC Model
+    description: 'TODO: Define scope and acceptance criteria for Define Authorization and RBAC Model.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Secure Workflow Credential Usage
+    description: 'TODO: Define scope and acceptance criteria for Secure Workflow Credential Usage.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Audit Security-Sensitive Actions
+    description: 'TODO: Define scope and acceptance criteria for Audit Security-Sensitive Actions.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Multi-Tenant Security Requirements
+    description: 'TODO: Define scope and acceptance criteria for Define Multi-Tenant Security Requirements.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Security Architecture Documentation
+    description: 'TODO: Define scope and acceptance criteria for Create Security Architecture Documentation.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Session-Based Control Plane Auth
+    description: Implement initial control-plane authentication using Spring Security and server-side sessions before introducing
+      more complex OIDC/JWT patterns.
+    acceptanceCriteria:
+    - Spring Security is configured for the orchestrator.
+    - Protected APIs require authentication.
+    - Server-side sessions are used for initial implementation.
+    - Future OIDC/JWT integration remains possible.
+    - Authentication architecture is documented.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Testing Strategy'
+  description: Establish a comprehensive testing strategy for StyxCD.
+  issues:
+  - name: Add YAML Parsing Tests
+    description: 'TODO: Define scope and acceptance criteria for Add YAML Parsing Tests.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Execution Plan Generation Tests
+    description: 'TODO: Define scope and acceptance criteria for Add Execution Plan Generation Tests.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Workflow Planner Tests
+    description: 'TODO: Define scope and acceptance criteria for Add Workflow Planner Tests.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Stage Inclusion Tests
+    description: 'TODO: Define scope and acceptance criteria for Add Stage Inclusion Tests.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Callback Processing Tests
+    description: 'TODO: Define scope and acceptance criteria for Add Callback Processing Tests.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Controller/API Tests
+    description: 'TODO: Define scope and acceptance criteria for Add Controller/API Tests.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Behavior Testing Framework
+    description: 'TODO: Define scope and acceptance criteria for Create Behavior Testing Framework.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create End-to-End Workflow Test Suite
+    description: 'TODO: Define scope and acceptance criteria for Create End-to-End Workflow Test Suite.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Local Testing Harness
+    description: 'TODO: Define scope and acceptance criteria for Add Local Testing Harness.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Docker Compose Development Environment
+    description: 'TODO: Define scope and acceptance criteria for Add Docker Compose Development Environment.'
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Dogfooding StyxCD'
+  description: Deploy and manage StyxCD using StyxCD.
+  issues:
+  - name: Deploy StyxCD Using StyxCD
+    description: 'TODO: Define scope and acceptance criteria for Deploy StyxCD Using StyxCD.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create StyxCD Release Workflow
+    description: 'TODO: Define scope and acceptance criteria for Create StyxCD Release Workflow.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create StyxCD Promotion Workflow
+    description: 'TODO: Define scope and acceptance criteria for Create StyxCD Promotion Workflow.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement StyxCD Self-Update Workflow
+    description: 'TODO: Define scope and acceptance criteria for Implement StyxCD Self-Update Workflow.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Validate Upgrade Scenarios
+    description: 'TODO: Define scope and acceptance criteria for Validate Upgrade Scenarios.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Document Internal Release Process
+    description: 'TODO: Define scope and acceptance criteria for Document Internal Release Process.'
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Release Management'
+  description: Establish repeatable release and promotion processes.
+  issues:
+  - name: Define Stable Environment Strategy
+    description: 'TODO: Define scope and acceptance criteria for Define Stable Environment Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Development Environment Strategy
+    description: 'TODO: Define scope and acceptance criteria for Define Development Environment Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Promotion Workflow
+    description: 'TODO: Define scope and acceptance criteria for Implement Promotion Workflow.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Version Management Strategy
+    description: 'TODO: Define scope and acceptance criteria for Implement Version Management Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Document Release Process
+    description: 'TODO: Define scope and acceptance criteria for Document Release Process.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Release Validation Checks
+    description: 'TODO: Define scope and acceptance criteria for Add Release Validation Checks.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Terraform and Deployment Boundary
+    description: Document how StyxCD should separate infrastructure lifecycle from deployment lifecycle when Terraform or
+      external infrastructure tools are involved.
+    acceptanceCriteria:
+    - Long-lived infrastructure responsibilities are identified.
+    - Release-time deployment responsibilities are identified.
+    - Fuzzy-boundary resources such as DNS, load balancers, target groups, ECS services, and ingress are discussed.
+    - 'Modes are documented: native deploy, Terraform-provisioned foundation, Terraform stage, and external infra contract.'
+    - Decision supports future ECS and Terraform work.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Multi-Cloud Support'
+  description: Expand StyxCD beyond a single cloud provider.
+  issues:
+  - name: Complete GKE Vertical Slice
+    description: 'TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Expand ECS Deployment Support
+    description: 'TODO: Define scope and acceptance criteria for Expand ECS Deployment Support.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Expand EKS Deployment Support
+    description: 'TODO: Define scope and acceptance criteria for Expand EKS Deployment Support.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Evaluate AKS Support
+    description: 'TODO: Define scope and acceptance criteria for Evaluate AKS Support.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Multi-Cloud Abstraction Strategy
+    description: 'TODO: Define scope and acceptance criteria for Define Multi-Cloud Abstraction Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Cloud Capability Matrix
+    description: 'TODO: Define scope and acceptance criteria for Create Cloud Capability Matrix.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement EKS Execution Plan Shape
+    description: Add EKS as a first-class StyxCD cloud workflow branch using the same conceptual deployment lifecycle proven
+      by GKE, plus an EKS-specific load balancer controller preparation stage.
+    acceptanceCriteria:
+    - CloudWorkflow emits EKS stages when platform.name is eks.
+    - EKS execution plan includes load balancer controller installation, namespace creation, per-app deploy/validate stages,
+      ingress, DNS, and service validation.
+    - Jenkins stage map resolves all EKS stage classes.
+    - Hello-world EKS stage execution validates end-to-end stage ordering.
+    - Existing GKE workflow continues to work after EKS planner changes.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement EKS Stage Logic From Sandbox Code
+    description: Move the existing working EKS sandbox deployment logic into discrete StyxCD stages matching the new EKS execution
+      plan.
+    acceptanceCriteria:
+    - EksInstallLoadBalancerController installs or validates AWS Load Balancer Controller support.
+    - EksCreateNamespace ensures the application namespace exists.
+    - EksDeployApplication creates deployment, service, secrets, and environment configuration.
+    - EksValidateDeployment performs rollout validation and captures diagnostics.
+    - EksCreateIngress creates the ALB-backed Kubernetes ingress.
+    - EksConfigureDns updates Route53 records for the ALB ingress endpoint.
+    - EksValidateService validates public application reachability.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Formal EKS YAML Specification
+    description: Define the first formal EKS YAML model after the hello-world execution plan is validated.
+    acceptanceCriteria:
+    - EKS YAML captures AWS region, cluster name, namespace, credentials, ingress class, ALB settings, DNS settings, and application
+      mappings.
+    - The spec distinguishes portable Kubernetes concepts from EKS-specific implementation options.
+    - Example EKS YAML deploys Johnny-Johnny backend and UI.
+    - The EKS YAML can generate the validated EKS execution plan.
+    - Spec documentation explains differences from the GKE YAML.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Document GKE and EKS Stage Parity
+    description: Capture the architectural mapping between GKE and EKS stages, including where the workflows align conceptually
+      and where EKS requires provider-specific setup.
+    acceptanceCriteria:
+    - Documentation includes a GKE/EKS stage mapping table.
+    - Documentation explains why EksInstallLoadBalancerController is separate from EksCreateIngress.
+    - 'Documentation explains the funnel model: cluster capability, namespace, app resources, ingress, DNS, validation.'
+    - Documentation captures the principle that platform abstraction means common lifecycle plus provider-specific stage implementation.
+    - Document is stored in styxcd-docs.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Evaluate AKS Stage Mapping
+    description: Use the GKE and EKS stage model as the reference point for evaluating how AKS maps into the StyxCD execution
+      lifecycle.
+    acceptanceCriteria:
+    - AKS stage mapping is compared against GKE and EKS.
+    - Any AKS-specific platform preparation stages are identified.
+    - Planner impact is documented before implementation.
+    - AKS evaluation avoids premature over-abstraction.
+    - Decision is captured in architecture docs.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Map ECS Native Deployment Lifecycle
+    description: Revisit ECS without Terraform first to discover the native ECS deployment lifecycle and compare it to Kubernetes
+      platform workflows.
+    acceptanceCriteria:
+    - ECS native deployment responsibilities are identified.
+    - Task definition, service update, load balancer, target group, DNS, and validation responsibilities are mapped.
+    - StyxCD ECS stages are proposed based on working implementation behavior.
+    - Terraform is deferred until native lifecycle boundaries are understood.
+    - ECS mapping is documented for later comparison.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Validation & Deployment Verification'
+  description: Provide standardized deployment validation across platforms.
+  issues:
+  - name: Define Validation Contract
+    description: 'TODO: Define scope and acceptance criteria for Define Validation Contract.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Validation Framework
+    description: 'TODO: Define scope and acceptance criteria for Implement Validation Framework.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Health Check Validation
+    description: 'TODO: Define scope and acceptance criteria for Add Health Check Validation.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Smoke Test Validation
+    description: 'TODO: Define scope and acceptance criteria for Add Smoke Test Validation.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Deployment Verification Reporting
+    description: 'TODO: Define scope and acceptance criteria for Add Deployment Verification Reporting.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Validation Dashboard Support
+    description: 'TODO: Define scope and acceptance criteria for Add Validation Dashboard Support.'
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: SLO-Aware Promotion'
+  description: Support promotion decisions using measurable deployment outcomes.
+  issues:
+  - name: Define Measurement Contract
+    description: 'TODO: Define scope and acceptance criteria for Define Measurement Contract.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Capture Validation Metrics
+    description: 'TODO: Define scope and acceptance criteria for Capture Validation Metrics.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Store Validation Results
+    description: 'TODO: Define scope and acceptance criteria for Store Validation Results.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Evaluate SLO Thresholds
+    description: 'TODO: Define scope and acceptance criteria for Evaluate SLO Thresholds.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support Promotion Gates
+    description: 'TODO: Define scope and acceptance criteria for Support Promotion Gates.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Document SLO Promotion Model
+    description: 'TODO: Define scope and acceptance criteria for Document SLO Promotion Model.'
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Artifact Management'
+  description: Support enterprise artifact promotion and governance patterns.
+  issues:
+  - name: Define Artifact Metadata Model
+    description: 'TODO: Define scope and acceptance criteria for Define Artifact Metadata Model.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Track Digest-Based Deployments
+    description: 'TODO: Define scope and acceptance criteria for Track Digest-Based Deployments.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support Registry Replication
+    description: 'TODO: Define scope and acceptance criteria for Support Registry Replication.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Store Promotion History
+    description: 'TODO: Define scope and acceptance criteria for Store Promotion History.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Artifact Audit Trail
+    description: 'TODO: Define scope and acceptance criteria for Implement Artifact Audit Trail.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Document Enterprise Artifact Strategy
+    description: 'TODO: Define scope and acceptance criteria for Document Enterprise Artifact Strategy.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Evaluate Build Once Promote Everywhere Pattern
+    description: Explore an enterprise artifact-management model where images are built once, tracked by digest, and promoted
+      or replicated across cloud-native registries.
+    acceptanceCriteria:
+    - Canonical artifact metadata model is proposed.
+    - Digest-based deployment support is evaluated.
+    - Registry replication/promotion use cases are documented.
+    - Cost and complexity tradeoffs are captured.
+    - Feature is positioned as optional enterprise governance, not the default deployment path.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Observability'
+  description: Provide operational visibility into StyxCD.
+  issues:
+  - name: Add Prometheus Metrics
+    description: 'TODO: Define scope and acceptance criteria for Add Prometheus Metrics.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Grafana Dashboards
+    description: 'TODO: Define scope and acceptance criteria for Add Grafana Dashboards.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Expand Structured Logging
+    description: 'TODO: Define scope and acceptance criteria for Expand Structured Logging.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Track Workflow Metrics
+    description: 'TODO: Define scope and acceptance criteria for Track Workflow Metrics.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Track Stage Metrics
+    description: 'TODO: Define scope and acceptance criteria for Track Stage Metrics.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Deployment Analytics
+    description: 'TODO: Define scope and acceptance criteria for Add Deployment Analytics.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Design Environment-Agnostic Log Collection
+    description: Design a log collection architecture that works across EC2, ECS, GKE, EKS, and future runtimes while preserving
+      consistent structured application logging.
+    acceptanceCriteria:
+    - Per-runtime collector options are evaluated.
+    - Alloy patterns for EC2 and Kubernetes are documented.
+    - ECS/CloudWatch/FireLens integration options are evaluated.
+    - Structured JSON logging contract is defined.
+    - Exceptions and execution-plan errors can flow to Loki/Grafana regardless of runtime.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Documentation & Knowledge Base'
+  description: Create a comprehensive documentation experience for StyxCD.
+  issues:
+  - name: Create Architecture Documentation
+    description: 'TODO: Define scope and acceptance criteria for Create Architecture Documentation.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Workflow Authoring Guide
+    description: 'TODO: Define scope and acceptance criteria for Create Workflow Authoring Guide.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Platform Guides
+    description: 'TODO: Define scope and acceptance criteria for Create Platform Guides.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Troubleshooting Guide
+    description: 'TODO: Define scope and acceptance criteria for Create Troubleshooting Guide.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Knowledge Base Structure
+    description: 'TODO: Define scope and acceptance criteria for Create Knowledge Base Structure.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Example Workflow Library
+    description: 'TODO: Define scope and acceptance criteria for Create Example Workflow Library.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Human and RAG Documentation Strategy
+    description: Decide how StyxCD documentation should serve both human readers today and future retrieval-augmented generation
+      use cases.
+    acceptanceCriteria:
+    - Human-readable documentation categories are defined.
+    - RAG-oriented documentation structure is defined.
+    - Document metadata conventions are proposed.
+    - Architecture decisions, YAML specs, examples, troubleshooting guides, and session handoffs are categorized.
+    - Guidelines explain what belongs in narrative docs versus machine-retrievable reference docs.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Formalize YAML Specification Documentation
+    description: Create a formal documentation model for StyxCD YAML specs, including cloud workflow specs, PM workflow specs,
+      examples, and help files.
+    acceptanceCriteria:
+    - YAML fields are documented with purpose, required/optional status, examples, and provider-specific notes.
+    - GKE and EKS examples are included.
+    - Spec help files are designed to be readable by humans and useful for future assistant retrieval.
+    - Versioning strategy for YAML specs is documented.
+    - Effective YAML documentation requirements are captured.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Clean Up Documentation Structure
+    description: Organize existing and future StyxCD docs into a clean structure that supports product documentation, architecture
+      history, implementation notes, and AI retrieval.
+    acceptanceCriteria:
+    - Repository documentation folders are proposed.
+    - Architecture docs, ADRs, specs, examples, backlog YAML, and handoff docs have clear homes.
+    - Redundant or stale documents are identified.
+    - A naming convention for dated session/context docs is defined.
+    - Documentation cleanup plan is added to the roadmap.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Architecture Decision Records
+    description: Introduce lightweight ADRs for major StyxCD design decisions such as execution-plan stages, platform abstraction
+      boundaries, Terraform boundaries, and documentation strategy.
+    acceptanceCriteria:
+    - ADR template is created.
+    - GKE/EKS stage parity decision is captured as an ADR.
+    - Native ECS before Terraform decision is captured as an ADR.
+    - Stable orchestration plus replaceable implementations principle is captured.
+    - ADRs are stored in styxcd-docs.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Local Development Experience'
+  description: Improve developer productivity and testing.
+  issues:
+  - name: Add In-Memory Database Mode
+    description: 'TODO: Define scope and acceptance criteria for Add In-Memory Database Mode.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Docker Compose Environment
+    description: 'TODO: Define scope and acceptance criteria for Create Docker Compose Environment.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Support Local Workflow Execution
+    description: 'TODO: Define scope and acceptance criteria for Support Local Workflow Execution.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Improve Developer Setup Documentation
+    description: 'TODO: Define scope and acceptance criteria for Improve Developer Setup Documentation.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Local Demo Environment
+    description: 'TODO: Define scope and acceptance criteria for Create Local Demo Environment.'
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: UI Enhancements'
+  description: Expand StyxCD usability and workflow authoring experience.
+  issues:
+  - name: Load YAML From File
+    description: 'TODO: Define scope and acceptance criteria for Load YAML From File.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Load YAML From URL
+    description: 'TODO: Define scope and acceptance criteria for Load YAML From URL.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Create Workflow Templates UI
+    description: 'TODO: Define scope and acceptance criteria for Create Workflow Templates UI.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Display Effective YAML
+    description: 'TODO: Define scope and acceptance criteria for Display Effective YAML.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Improve Mobile Experience
+    description: 'TODO: Define scope and acceptance criteria for Improve Mobile Experience.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Execution Filtering
+    description: 'TODO: Define scope and acceptance criteria for Add Execution Filtering.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Execution Comparison View
+    description: 'TODO: Define scope and acceptance criteria for Add Execution Comparison View.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Add Template Catalog UI
+    description: 'TODO: Define scope and acceptance criteria for Add Template Catalog UI.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Remember YAML Editor State
+    description: Improve the StyxCD UI by remembering the user's last submitted YAML and editor/layout state.
+    acceptanceCriteria:
+    - Last submitted YAML can be restored from local storage.
+    - Editor/layout preferences can be remembered.
+    - Clear editor behavior remains available.
+    - Draft restore behavior is predictable and documented.
+    - Feature does not interrupt current workflow execution.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Planning & Decision Engine'
+  description: Evolve workflow planning into a semantic decision system.
+  issues:
+  - name: Define PlanningDecision Model
+    description: 'TODO: Define scope and acceptance criteria for Define PlanningDecision Model.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Integrate Drools Decision Engine
+    description: 'TODO: Define scope and acceptance criteria for Integrate Drools Decision Engine.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Separate Planning From Execution
+    description: 'TODO: Define scope and acceptance criteria for Separate Planning From Execution.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Implement Decision Rules Framework
+    description: 'TODO: Define scope and acceptance criteria for Implement Decision Rules Framework.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Document Planning Architecture
+    description: 'TODO: Define scope and acceptance criteria for Document Planning Architecture.'
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Rename Validation Map Concepts
+    description: Revisit naming around VALIDATE_MAP, paramMap, and stageSpecificMap to better reflect execution planning,
+      workflow context, and stage telemetry.
+    acceptanceCriteria:
+    - 'Candidate names are reviewed: PlanningDecision/DecisionMap, ExecutionContext, StageTelemetry.'
+    - Current naming pain points are documented.
+    - Renaming plan avoids disrupting current implementation flow.
+    - Decision is captured in architecture documentation.
+    - Code changes are deferred until timing is appropriate.
+    labels: []
+    assignees: []
+    milestone: ''
+- name: 'Epic: Kharon Assistant'
+  description: Build assistant capabilities that help users retrieve contextual project knowledge, understand StyxCD decisions,
+    and navigate implementation history.
+  issues:
+  - name: Create RAG Context Retrieval Layer
+    description: Create a retrieval layer that can index StyxCD documentation, specs, architecture decisions, backlog YAML,
+      and session handoffs so Kharon can recover project context accurately.
+    acceptanceCriteria:
+    - Supported source document types are identified.
+    - Chunking and metadata strategy is defined.
+    - Retrieval results can include source references.
+    - Initial corpus includes architecture docs, YAML specs, backlog YAML, and handoff documents.
+    - Assistant can answer contextual questions about prior decisions without relying only on conversation memory.
+    labels: []
+    assignees: []
+    milestone: ''
+  - name: Define Kharon Project Memory Sources
+    description: Define which repositories, documents, and generated artifacts should become trusted sources for Kharon contextual
+      answers.
+    acceptanceCriteria:
+    - Trusted source list is documented.
+    - styxcd-docs is treated as the primary project knowledge source.
+    - Generated session handoffs have a clear lifecycle.
+    - Deprecated or experimental documents are marked clearly.
+    - Source freshness and authority rules are documented.
+    labels: []
+    assignees: []
+    milestone: ''
+  acceptanceCriteria:
+  - Assistant can retrieve relevant StyxCD context from approved documentation sources.
+  - Assistant responses can cite source documents.
+  - Project knowledge is organized for both human use and RAG retrieval.
+  - Assistant helps with implementation handoffs, spec lookup, and architectural decision recall.
+generated:
+  date: '2026-06-17'
+  name: combined-styxcd-roadmap-backlog
+  notes: Combined PM workflow backlog with existing StyxCD roadmap and new items from recent EKS, documentation, RAG, ECS,
+    Terraform, and assistant discussions.

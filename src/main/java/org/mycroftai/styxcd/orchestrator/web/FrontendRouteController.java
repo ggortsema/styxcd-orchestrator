@@ -2,6 +2,7 @@ package org.mycroftai.styxcd.orchestrator.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class FrontendRouteController {
@@ -11,13 +12,26 @@ public class FrontendRouteController {
         return "forward:/dashboard/index.html";
     }
 
+    @GetMapping({"/operations", "/operations/"})
+    public String operations() {
+        return "forward:/operations/index.html";
+    }
+
     @GetMapping({"/docs", "/docs/"})
     public String docs() {
         return "forward:/docs/index.html";
     }
 
-    @GetMapping({"/operations", "/operations/"})
-    public String operations() {
-        return "forward:/operations/index.html";
+    @GetMapping({"/docs/{section:[^\\.]+}", "/docs/{section:[^\\.]+}/"})
+    public String docsSection(@PathVariable String section) {
+        return "forward:/docs/" + section + "/index.html";
+    }
+
+    @GetMapping({"/docs/{section:[^\\.]+}/{page:[^\\.]+}", "/docs/{section:[^\\.]+}/{page:[^\\.]+}/"})
+    public String docsPage(
+            @PathVariable String section,
+            @PathVariable String page
+    ) {
+        return "forward:/docs/" + section + "/" + page + "/index.html";
     }
 }

@@ -30,6 +30,11 @@
         <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+
+        <styxcd.docs.repo.url>https://github.com/ggortsema/styxcd-docs.git</styxcd.docs.repo.url>
+        <styxcd.docs.repo.branch>main</styxcd.docs.repo.branch>
+        <styxcd.docs.checkout.directory>${project.build.directory}/styxcd-docs</styxcd.docs.checkout.directory>
     </properties>
 
     <pluginRepositories>
@@ -128,6 +133,60 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven-antrun-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>checkout-and-copy-styxcd-docs</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+
+                                <echo message="Removing previous docs checkout"/>
+
+                                <delete dir="${styxcd.docs.checkout.directory}"/>
+
+                                <mkdir dir="${project.build.directory}"/>
+
+                                <echo message="Cloning ${styxcd.docs.repo.url} branch ${styxcd.docs.repo.branch}"/>
+
+                                <exec executable="git" failonerror="true">
+                                    <arg value="clone"/>
+                                    <arg value="--depth"/>
+                                    <arg value="1"/>
+                                    <arg value="--branch"/>
+                                    <arg value="${styxcd.docs.repo.branch}"/>
+                                    <arg value="${styxcd.docs.repo.url}"/>
+                                    <arg value="${styxcd.docs.checkout.directory}"/>
+                                </exec>
+
+                                <echo message="Deleting existing frontend docs directory"/>
+
+                                <delete dir="${project.basedir}/frontend/content/docs"/>
+
+                                <mkdir dir="${project.basedir}/frontend/content/docs"/>
+
+                                <echo message="Copying checked-out docs into frontend/content/docs"/>
+
+                                <copy todir="${project.basedir}/frontend/content/docs">
+                                    <fileset dir="${styxcd.docs.checkout.directory}">
+                                        <exclude name=".git/**"/>
+                                        <exclude name="target/**"/>
+                                        <exclude name="node_modules/**"/>
+                                    </fileset>
+                                </copy>
+
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
@@ -154,7 +213,7 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>${frontend-maven-plugin.version}</version>
                 <configuration>
-                    <workingDirectory>frontend-old</workingDirectory>
+                    <workingDirectory>frontend</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -180,10 +239,10 @@
 
                     <execution>
                         <id>npm-build</id>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <phase>generate-resources</phase>
                         <configuration>
                             <arguments>run build</arguments>
                         </configuration>

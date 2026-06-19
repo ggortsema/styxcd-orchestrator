@@ -1,0 +1,146 @@
+workflow: pm_workflow
+
+provider:
+  type: github
+  repository: ggortsema/styxcd-docs
+  project: mycroftai engineering roadmap
+  jenkins_creds: mycred
+
+epics:
+  - name: "Epic: Project Management Workflow Provider"
+    description: "Implement a StyxCD workflow that can create, update, synchronize, and migrate roadmap items across project-management providers using YAML as the durable source of truth."
+    acceptanceCriteria:
+      - "Project-management workflows can be represented as YAML."
+      - "GitHub Issues and GitHub Projects are supported as the first provider target."
+      - "Epics and child issues can be created from YAML."
+      - "Workflow execution supports dry-run and idempotency."
+      - "Provider issue IDs and URLs can be synchronized back into YAML."
+      - "Provider migration is possible without losing the roadmap-as-code source."
+    issues:
+      - name: "Define PM Workflow DSL"
+        description: "Define the YAML structure for project-management workflows, including provider configuration, epics, issues, labels, assignees, milestones, acceptance criteria, and provider metadata."
+        acceptanceCriteria:
+          - "PM workflow YAML schema is documented."
+          - "Epics and issues are represented clearly."
+          - "Optional fields such as labels, assignees, and milestones are supported."
+          - "Provider-specific metadata can be stored without polluting the portable model."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Implement GitHub Issues Provider"
+        description: "Implement the first PM workflow provider using the GitHub API to create roadmap issues in the configured repository."
+        acceptanceCriteria:
+          - "GitHub provider can authenticate using Jenkins credentials."
+          - "Provider can create epic issues."
+          - "Provider can create child issues."
+          - "Provider can apply labels, assignees, and milestones when supplied."
+          - "Provider errors are reported clearly."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Support Epic and Sub-Issue Creation"
+        description: "Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship model."
+        acceptanceCriteria:
+          - "Epic issue is created first."
+          - "Child issues are created under the correct epic."
+          - "Parent-child relationships are preserved."
+          - "Created items are added to the configured project board."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Support GitHub Project Assignment"
+        description: "Add created or updated issues to the configured GitHub Project board."
+        acceptanceCriteria:
+          - "Project can be identified from YAML configuration."
+          - "Created epics are added to the project."
+          - "Created issues are added to the project."
+          - "Default status can be set when supported."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Add PM Workflow Dry-Run Mode"
+        description: "Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider."
+        acceptanceCriteria:
+          - "Dry-run mode performs no writes."
+          - "Dry-run output lists epics and issues that would be created."
+          - "Dry-run output lists items that would be updated."
+          - "Dry-run output identifies potential duplicates or conflicts."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Support PM Workflow Idempotency"
+        description: "Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist."
+        acceptanceCriteria:
+          - "Existing epics are detected."
+          - "Existing issues are detected."
+          - "Matching can use provider ID when available."
+          - "Matching can fall back to title when ID is missing."
+          - "Duplicate creation is prevented."
+          - "Dry-run output reports create/update/no-op actions."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Synchronize PM Workflow YAML From Provider"
+        description: "Read existing epics and issues from a project-management provider and update local PM workflow YAML with provider identifiers, links, and status metadata."
+        acceptanceCriteria:
+          - "Existing provider issues can be fetched."
+          - "Issues are matched to YAML entries by title."
+          - "Provider issue IDs are written back to YAML."
+          - "Provider URLs are written back to YAML."
+          - "Existing YAML descriptions are preserved."
+          - "Missing or renamed issues are reported."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Support Provider Metadata in PM Workflow YAML"
+        description: "Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp, Jira, or future providers."
+        acceptanceCriteria:
+          - "Provider-specific IDs are stored under provider metadata."
+          - "Portable fields remain provider-neutral."
+          - "Multiple provider mappings can be represented."
+          - "Provider metadata structure is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Support Provider Migration for PM Workflows"
+        description: "Allow the same roadmap YAML to be projected into a different project-management provider."
+        acceptanceCriteria:
+          - "PM workflow provider model is abstracted."
+          - "Provider-specific IDs are stored separately."
+          - "YAML can support multiple provider mappings."
+          - "Roadmap can be recreated in a new provider."
+          - "Migration process is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Generate PM Workflow YAML From Conversation"
+        description: "Use an AI-assisted step to transform roadmap discussion or session notes into PM workflow YAML."
+        acceptanceCriteria:
+          - "Conversation/session notes can be converted into PM workflow YAML."
+          - "Generated YAML follows the PM workflow schema."
+          - "Generated YAML can be reviewed before execution."
+          - "Generated YAML can be committed to styxcd-docs."
+        labels: []
+        assignees: []
+        milestone: ""
+
+      - name: "Demonstrate Backlog-as-Code Workflow"
+        description: "Use StyxCD to create or update a real project-management backlog from committed PM workflow YAML."
+        acceptanceCriteria:
+          - "PM workflow YAML exists in styxcd-docs."
+          - "Workflow can be executed through StyxCD."
+          - "GitHub issues are created or updated."
+          - "Execution output shows create/update/no-op results."
+          - "Demo is documented."
+        labels: []
+        assignees: []
+        milestone: ""

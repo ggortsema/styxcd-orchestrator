@@ -1,8 +1,8 @@
 /target/
-/frontend/node/
-/frontend/node_modules/
-/frontend/out/
-/frontend/.next/
+/frontend-old/node/
+/frontend-old/node_modules/
+/frontend-old/out/
+/frontend-old/.next/
 .idea/
 *.iml
 **/.DS_Store

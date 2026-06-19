@@ -1,34 +1,24 @@
-# StyxCD Documentation
+# StyxCD ADR Pack - Working Draft
 
-This is the cleaned documentation set for StyxCD.
+Date: 2026-06-13
 
-StyxCD is a YAML-driven deployment orchestration platform. The orchestrator accepts release intent, generates an execution plan, persists execution state, and delegates runtime work to execution agents such as Jenkins.
+This is a rough working set of architectural decision records captured from recent StyxCD design sessions. These are intentionally draft-quality notes for later cleanup and consolidation.
 
-## Start here
+## Included ADRs
 
-1. [Architecture Overview](architecture/overview.md)
-2. [Execution Planning](architecture/execution-planning.md)
-3. [Control Plane](architecture/control-plane.md)
-4. [YAML Contract](specifications/yaml-contract.md)
-5. [Kubernetes GKE/EKS Stage Architecture](platform-targets/kubernetes/gke-eks-stage-architecture.md)
-6. [Observability](observability/observability-architecture.md)
-7. [Architectural Decision Records](adr/README.md)
+- ADR-001: Use YAML intent as input and execution plan map as runtime contract
+- ADR-002: Keep Jenkins execution-focused and move YAML parsing/planning into orchestrator
+- ADR-003: Model cloud workflow with lifecycle -> target -> application planning
+- ADR-004: Split GKE stages by target scope and application scope
+- ADR-005: Merge Kubernetes Service creation into GKE application deployment
+- ADR-006: Keep deployment validation and service validation separate
+- ADR-007: Rename APPHOST_NAME to APP_NAME in the common contract
+- ADR-008: Use __final__ as reserved final-stage marker
+- ADR-009: Keep authentication as utility behavior, not a workflow stage
+- ADR-010: Allow stage helper classes when they encapsulate stage contract logic
+- ADR-011: Refactor future stage registration toward Spring bean registry
+- ADR-012: Keep execution plan stable while allowing future workflow DSL/productization
+- ADR-013: Use environment-agnostic structured logging into Loki/Grafana
+- ADR-014: Treat Terraform/ECS/GKE deployment paths as separate workflow capabilities
+- ADR-015: Capture project-management workflow as a future non-deployment capability
 
-## Directory layout
-
-```text
-adr/                         Architectural decision records; source of truth for decisions.
-architecture/                Current architecture and execution model.
-specifications/              User/input contracts and infrastructure specifications.
-platform-targets/            Platform-specific target behavior such as Kubernetes and Terraform.
-observability/               Logging, telemetry, Loki/Grafana, and execution diagnostics.
-kharon/                      Future RAG/AI knowledge assistant vision.
-backlog/                     Backlog YAML files preserved as-is.
-migration/                   Legacy planner code/reference material.
-archive/                     Historical notes, handoffs, and superseded drafts.
-assets/                      Diagrams and supporting assets.
-```
-
-## Cleanup policy
-
-The cleaned structure keeps ADRs and consolidated docs as the authoritative documentation path. Older session handoffs, duplicate architecture notes, and superseded drafts are preserved in `archive/` for traceability but should not be treated as current design guidance unless explicitly referenced by an ADR.

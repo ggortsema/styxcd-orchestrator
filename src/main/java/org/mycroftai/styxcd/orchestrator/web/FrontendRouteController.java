@@ -34,4 +34,14 @@ public class FrontendRouteController {
     ) {
         return "forward:/docs/" + section + "/" + page + "/index.html";
     }
+
+    @GetMapping({"/yaml-spec", "/yaml-spec/"})
+    public String yamlSpec() {
+        return "forward:/yaml-spec/index.html";
+    }
+
+    @GetMapping({"/yaml-spec/{page:[^\\.]+}", "/yaml-spec/{page:[^\\.]+}/"})
+    public String yamlSpecPage(@PathVariable String page) {
+        return "forward:/yaml-spec/" + page + "/index.html";
+    }
 }

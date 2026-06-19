@@ -1,0 +1,26 @@
+title: YAML Specification
+
+items:
+  - title: Overview
+    path: overview
+
+  - title: Workflow
+    path: workflow
+
+  - title: Release
+    path: release
+
+  - title: Applications
+    path: applications
+
+  - title: Services
+    path: services
+
+  - title: Environments
+    path: environments
+
+  - title: Testing
+    path: testing
+
+  - title: Full Example
+    path: full-example

@@ -20,13 +20,10 @@
 
     <properties>
         <java.version>21</java.version>
-
         <groovy.version>5.0.5</groovy.version>
         <groovy.eclipse.compiler.version>3.9.1</groovy.eclipse.compiler.version>
         <groovy.eclipse.batch.version>5.0.5-01</groovy.eclipse.batch.version>
-
         <drools.version>9.44.0.Final</drools.version>
-
         <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
@@ -45,82 +42,68 @@
     </pluginRepositories>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>${groovy.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-api</artifactId>
             <version>${drools.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
             <version>${drools.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
             <version>${drools.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-engine-classic</artifactId>
             <version>${drools.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-mvel</artifactId>
             <version>${drools.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.hypersistence</groupId>
             <artifactId>hypersistence-utils-hibernate-63</artifactId>
             <version>3.9.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -146,13 +129,11 @@
                             <target>
 
                                 <echo message="Removing previous docs checkout"/>
-
                                 <delete dir="${styxcd.docs.checkout.directory}"/>
 
                                 <mkdir dir="${project.build.directory}"/>
 
                                 <echo message="Cloning ${styxcd.docs.repo.url} branch ${styxcd.docs.repo.branch}"/>
-
                                 <exec executable="git" failonerror="true">
                                     <arg value="clone"/>
                                     <arg value="--depth"/>
@@ -164,15 +145,26 @@
                                 </exec>
 
                                 <echo message="Deleting existing frontend docs directory"/>
-
                                 <delete dir="${project.basedir}/frontend/content/docs"/>
-
                                 <mkdir dir="${project.basedir}/frontend/content/docs"/>
 
-                                <echo message="Copying checked-out docs into frontend/content/docs"/>
-
+                                <echo message="Copying checked-out docs into frontend/content/docs, excluding yaml-spec"/>
                                 <copy todir="${project.basedir}/frontend/content/docs">
                                     <fileset dir="${styxcd.docs.checkout.directory}">
+                                        <exclude name=".git/**"/>
+                                        <exclude name="target/**"/>
+                                        <exclude name="node_modules/**"/>
+                                        <exclude name="yaml-spec/**"/>
+                                    </fileset>
+                                </copy>
+
+                                <echo message="Deleting existing frontend YAML spec directory"/>
+                                <delete dir="${project.basedir}/frontend/content/yaml-spec"/>
+                                <mkdir dir="${project.basedir}/frontend/content/yaml-spec"/>
+
+                                <echo message="Copying checked-out YAML spec into frontend/content/yaml-spec"/>
+                                <copy todir="${project.basedir}/frontend/content/yaml-spec">
+                                    <fileset dir="${styxcd.docs.checkout.directory}/yaml-spec">
                                         <exclude name=".git/**"/>
                                         <exclude name="target/**"/>
                                         <exclude name="node_modules/**"/>

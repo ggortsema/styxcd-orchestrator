@@ -23,6 +23,7 @@ export default function RootLayout({ children }) {
             <a href="/" style={navLinkStyle}>Dashboard</a>
             <a href="/operations/" style={navLinkStyle}>Operations</a>
             <a href="/docs/" style={navLinkStyle}>Docs</a>
+            <a href="/yaml-spec/" style={navLinkStyle}>YAML Specification</a>
           </nav>
         </aside>
 

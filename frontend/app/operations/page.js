@@ -14,6 +14,17 @@ release:
     environment: present
     applications: deployed
 
+    # Other valid desired_state examples:
+    #
+    # environment: absent
+    # applications: none
+    #
+    # environment: ephemeral
+    # applications: deployed
+    #
+    # environment: present
+    # applications: built
+
   applications:
 
     spring:
@@ -31,8 +42,8 @@ release:
 
         artifacts:
           - type: docker-image
-            image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-backend:latest
-            
+            image: 359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-backend:latest
+
     node:
       - name: johnny-johnny-ui
         repo: https://github.com/ggortsema/johnny-johnny-ui.git
@@ -47,22 +58,21 @@ release:
 
         artifacts:
           - type: docker-image
-            image: us-east1-docker.pkg.dev/styxcd-sandbox-grant/styxcd-sandbox/johnny-johnny-ui:latest
+            image: 359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-ui:latest
 
   environments:
     sandbox:
-      - name: johnny-johnny-gke-sandbox
+      - name: johnny-johnny-eks-sandbox
         platform:
-          name: gke
-          project_id: styxcd-sandbox-grant
-          cluster_name: styxcd-sandbox-gke
-          location: us-east1-b
-          location_type: zonal
+          name: eks
+          cluster_name: johnny-johnny-dev
+          region: us-east-1
           namespace: johnny-johnny
 
           credentials:
             source: jenkins
-            id: gcp-service-account
+            access_key_id: aws-access-key-id
+            secret_access_key: aws-secret-access-key
 
           defaults:
             replicas: 1
@@ -72,7 +82,7 @@ release:
           ingress:
             enabled: true
             name: johnny-johnny-ingress
-            class_name: gce
+            class_name: alb
             hosts:
               - host: johnny-johnny.mycroftai.org
                 routes:

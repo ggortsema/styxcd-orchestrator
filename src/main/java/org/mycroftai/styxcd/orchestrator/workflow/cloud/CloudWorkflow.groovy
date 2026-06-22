@@ -3,6 +3,7 @@ package org.mycroftai.styxcd.orchestrator.workflow.cloud
 import org.mycroftai.styxcd.orchestrator.workflow.Workflow
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.CloudWorkflowCleanup
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.CloudWorkflowInitialize
+import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.EKSWorkflowClusterBuild
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.EksConfigureDns
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.EksCreateIngress
 import org.mycroftai.styxcd.orchestrator.workflow.cloud.stage.EksCreateNamespace
@@ -38,6 +39,7 @@ class CloudWorkflow implements Workflow {
     private final EksValidateService eksValidateService
     private final GkeValidateDeployment gkeValidateDeployment
     private final EksValidateDeployment eksValidateDeployment
+    private final EKSWorkflowClusterBuild eksWorkflowClusterBuild
 
     CloudWorkflow(
             CloudWorkflowInitialize cloudWorkflowInitialize,
@@ -55,7 +57,8 @@ class CloudWorkflow implements Workflow {
             EksCreateIngress eksCreateIngress,
             EksConfigureDns eksConfigureDns,
             EksValidateService eksValidateService,
-            EksValidateDeployment eksValidateDeployment
+            EksValidateDeployment eksValidateDeployment,
+            EKSWorkflowClusterBuild eksWorkflowClusterBuild
     ) {
         this.cloudWorkflowInitialize = cloudWorkflowInitialize
         this.cloudWorkflowCleanup = cloudWorkflowCleanup
@@ -73,6 +76,7 @@ class CloudWorkflow implements Workflow {
         this.eksConfigureDns = eksConfigureDns
         this.eksValidateService = eksValidateService
         this.eksValidateDeployment = eksValidateDeployment
+        this.eksWorkflowClusterBuild = eksWorkflowClusterBuild
     }
 
     @Override
@@ -168,6 +172,10 @@ class CloudWorkflow implements Workflow {
                     jsonOutput["EksCreateIngress@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = eksCreateIngress.getParams(yml, paramMap)
                     jsonOutput["EksConfigureDns@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = eksConfigureDns.getParams(yml, paramMap)
                     jsonOutput["EksValidateService@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = eksValidateService.getParams(yml, paramMap)
+                }
+                if (target?.platform?.name == 'aks') {
+                    //TODO this needs to be remoed it is just a way to trigger the eks cluster build for now
+                    jsonOutput["EKSWorkflowClusterBuild@${paramMap['PLATFORM_NAME']}${paramMap['LIFECYCLE']}${paramMap['TARGET_NAME']}"] = eksWorkflowClusterBuild.getParams(yml, paramMap)
                 }
             }
         }
